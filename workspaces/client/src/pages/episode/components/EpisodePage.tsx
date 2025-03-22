@@ -51,7 +51,13 @@ export const EpisodePage = () => {
           <div className="m-auto mb-[16px] h-auto w-full max-w-[1280px] outline outline-[1px] outline-[#212121]">
             {isSignInRequired ? (
               <div className="relative size-full">
-                <img loading="lazy" decoding="async" alt="" className="h-auto w-full" src={episode.thumbnailUrl} />
+                <img
+                  loading="lazy"
+                  decoding="async"
+                  alt=""
+                  className="aspect-video w-full"
+                  src={episode.thumbnailUrl}
+                />
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#00000077] p-[24px]">
                   <p className="mb-[32px] text-[24px] font-bold text-[#ffffff]">

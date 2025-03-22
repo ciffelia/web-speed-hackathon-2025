@@ -36,7 +36,13 @@ export const NewTimetableFeatureDialog = ({ isOpen }: Props) => {
           引き続き皆様に快適にご利用いただけるよう、サービスの改善に努めてまいります。今後ともどうぞよろしくお願いいたします。
         </p>
 
-        <img loading="lazy" decoding="async" alt="" className="mb-[24px] w-full" src={FeatureExplainImageUrl} />
+        <img
+          loading="lazy"
+          decoding="async"
+          alt=""
+          className="mb-[24px] aspect-video w-full"
+          src={FeatureExplainImageUrl}
+        />
 
         <div className="flex flex-row justify-center">
           <button

@@ -38,7 +38,7 @@ export const SeriesPage = () => {
               loading="lazy"
               decoding="async"
               alt=""
-              className="h-auto w-[400px] shrink-0 grow-0 rounded-[8px] border-[2px] border-solid border-[#FFFFFF1F]"
+              className="aspect-video w-[400px] shrink-0 grow-0 rounded-[8px] border-[2px] border-solid border-[#FFFFFF1F]"
               src={series.thumbnailUrl}
             />
           </Flipped>
