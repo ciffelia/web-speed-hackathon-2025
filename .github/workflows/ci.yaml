@@ -66,7 +66,7 @@ jobs:
 
       - run: pnpm run test
 
-      - if: always()
+      - if: ${{ always() }}
         run: cat server.log
 
   metadata:
@@ -117,11 +117,11 @@ jobs:
           REPORT_URL: ${{ secrets.REPORT_URL }}
           REPORT_TOKEN: ${{ secrets.REPORT_TOKEN }}
 
-      - if: always()
+      - if: ${{ always() }}
         run: cat server.log
 
       - name: Upload blob report
-        if: !cancelled()
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
           name: blob-report-${{ matrix.shardIndex }}
@@ -129,13 +129,13 @@ jobs:
           retention-days: 1
 
       - name: Collect changed files
-        if: !cancelled()
+        if: ${{ !cancelled() }}
         run: |
           git add -N .
           git diff --diff-filter=d --name-only -z | tar cf changed-files.tar --null --files-from=-
 
       - name: Upload changed files archive
-        if: !cancelled()
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
           name: changed-files-${{ matrix.shardIndex }}
