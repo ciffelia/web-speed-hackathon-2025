@@ -63,6 +63,8 @@ jobs:
         env:
           RSDOCTOR: 'true'
 
+      - run: ls -la workspaces/client/dist
+
       - name: Upload Rsdoctor report
         uses: actions/upload-artifact@v4
         with:
