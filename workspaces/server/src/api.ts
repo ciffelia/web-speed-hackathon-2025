@@ -492,6 +492,26 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
           },
         },
       });
+
+      // 使われていないデータを削除
+      for (const module of modules) {
+        if (module.type === 'carousel') {
+          for (const item of module.items) {
+            if (item.series) {
+              item.series.description = '';
+            }
+            if (item.episode) {
+              item.episode.description = '';
+              item.episode.series.description = '';
+            }
+          }
+        } else if (module.type === 'jumbotron') {
+          if (module.items[0]?.episode) {
+            module.items[0].episode.series.description = '';
+          }
+        }
+      }
+
       reply.code(200).send(modules);
     },
   });
