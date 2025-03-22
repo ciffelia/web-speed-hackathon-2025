@@ -8,9 +8,6 @@
     }
   ],
   "env": {
-    "NODE_MODULES_CACHE": {
-      "value": "false"
-    },
     "WIREIT_CACHE": {
       "value": "none"
     }
