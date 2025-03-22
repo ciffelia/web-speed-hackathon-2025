@@ -46,6 +46,7 @@ const config = {
     publicPath: 'auto',
   },
   plugins: [
+    new rspack.ProgressPlugin(),
     process.env['RSDOCTOR'] &&
       new RsdoctorRspackPlugin({
         disableClientServer: true,

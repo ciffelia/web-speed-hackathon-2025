@@ -9,7 +9,8 @@
     "lint": "wireit",
     "lint:eslint": "wireit",
     "lint:prettier": "wireit",
-    "typecheck": "wireit"
+    "typecheck": "wireit",
+    "watch": "rspack build --watch"
   },
   "dependencies": {
     "@better-fetch/fetch": "1.1.15",
@@ -73,7 +74,7 @@
   },
   "wireit": {
     "build": {
-      "command": "rspack",
+      "command": "rspack build",
       "files": [
         "../../pnpm-lock.yaml",
         "../schema/src/**/*",
