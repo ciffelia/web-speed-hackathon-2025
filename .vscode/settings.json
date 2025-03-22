@@ -11,10 +11,12 @@
     { "rule": "import/order", "severity": "off" },
     { "rule": "sort/*", "severity": "off" }
   ],
+  "files.exclude": {
+    "deploy": true
+  },
   "git.ignoredRepositories": ["./deploy"],
   "search.exclude": {
     "**/.wireit": true,
-    "**/dist": true,
-    "deploy": true
+    "**/dist": true
   }
 }
