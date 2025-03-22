@@ -8,9 +8,10 @@
     }
   },
   "jsc": {
+    "externalHelpers": true,
     "parser": {
       "syntax": "typescript",
-      "tsx": false
+      "tsx": true
     },
     "transform": {
       "react": {

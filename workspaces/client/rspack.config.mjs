@@ -21,6 +21,7 @@ const config = {
           fullySpecified: false,
         },
         test: /\.(?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$/,
+        type: 'javascript/auto',
         use: {
           // TODO: migrate to builtin:swc-loader
           loader: 'swc-loader',
