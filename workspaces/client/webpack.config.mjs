@@ -72,7 +72,7 @@ const config = {
   },
   plugins: [
     new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
-    new webpack.EnvironmentPlugin({ API_BASE_URL: '/api', NODE_ENV: '' }),
+    new webpack.EnvironmentPlugin({ API_BASE_URL: '/api' }),
     UnoCSS(),
     new MiniCssExtractPlugin(),
   ],
