@@ -113,9 +113,6 @@ importers:
       valibot:
         specifier: 1.0.0-rc.3
         version: 1.0.0-rc.3(typescript@5.7.2)
-      view-transitions-polyfill:
-        specifier: 1.0.3
-        version: 1.0.3
       zod:
         specifier: 3.24.1
         version: 3.24.1
@@ -4729,9 +4726,6 @@ packages:
 
   videojs-vtt.js@0.15.5:
     resolution: {integrity: sha512-yZbBxvA7QMYn15Lr/ZfhhLPrNpI/RmCSCqgIff57GC2gIrV5YfyzLfLyZMj0NnZSAz8syB4N0nHXpZg9MyrMOQ==}
-
-  view-transitions-polyfill@1.0.3:
-    resolution: {integrity: sha512-o7tiNKAsuqvL0u4Epo/jrSOx7qy1/KH3ajzHsY0GU4zWIOiiC6Pyczyf6QgJneyFKlu8QdcMeCQocUl94R+fvA==}
 
   vue-flow-layout@0.1.1:
     resolution: {integrity: sha512-JdgRRUVrN0Y2GosA0M68DEbKlXMqJ7FQgsK8CjQD2vxvNSqAU6PZEpi4cfcTVtfM2GVOMjHo7GKKLbXxOBqDqA==}
@@ -9358,8 +9352,6 @@ snapshots:
   videojs-vtt.js@0.15.5:
     dependencies:
       global: 4.4.0
-
-  view-transitions-polyfill@1.0.3: {}
 
   vue-flow-layout@0.1.1: {}
 

@@ -2,10 +2,10 @@
   "$schema": "https://swc.rs/schema.json",
   "env": {
     "coreJs": "3.41",
-    "debug": true,
-    "forceAllTransforms": true,
-    "mode": "entry",
-    "targets": "defaults"
+    "mode": "usage",
+    "targets": {
+      "chrome": "133"
+    }
   },
   "jsc": {
     "parser": {
