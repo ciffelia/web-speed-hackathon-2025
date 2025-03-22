@@ -46,6 +46,7 @@ const config = {
   },
   output: {
     chunkFilename: 'chunk-[contenthash].js',
+    // `main-[contenthash].js` にするとなぜかCSSが壊れる
     filename: 'main.js',
     path: path.resolve(import.meta.dirname, './dist'),
     publicPath: 'auto',
@@ -54,7 +55,9 @@ const config = {
     new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
     new webpack.EnvironmentPlugin({ API_BASE_URL: '/api' }),
     UnoCSS(),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      chunkFilename: 'chunk-[contenthash].css',
+    }),
   ],
   resolve: {
     extensions: ['.js', '.cjs', '.mjs', '.ts', '.cts', '.mts', '.tsx', '.jsx'],
