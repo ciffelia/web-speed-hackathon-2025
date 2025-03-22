@@ -12,6 +12,7 @@ permissions:
 jobs:
   typecheck:
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
 
@@ -28,6 +29,7 @@ jobs:
 
   lint:
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
 
@@ -44,6 +46,7 @@ jobs:
 
   build:
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
 
@@ -69,6 +72,7 @@ jobs:
 
   metadata:
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     permissions:
       actions: read
     outputs:
@@ -88,6 +92,7 @@ jobs:
         shardIndex: [1, 2, 3]
         shardTotal: [3]
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -144,7 +149,8 @@ jobs:
   test-merge-reports:
     if: ${{ !cancelled() }}
     needs: [test-sharding]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
 
@@ -179,6 +185,7 @@ jobs:
     needs: [test-sharding]
     runs-on: ubuntu-24.04
     permissions: {}
+    timeout-minutes: 5
     steps:
       - name: Download changed files
         uses: actions/download-artifact@v4
