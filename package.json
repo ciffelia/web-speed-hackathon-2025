@@ -9,7 +9,8 @@
     "heroku-start": "wireit",
     "lint": "wireit",
     "start": "wireit",
-    "test": "wireit"
+    "test": "wireit",
+    "typecheck": "wireit"
   },
   "dependencies": {
     "wireit": "0.14.9"
@@ -30,6 +31,14 @@
     }
   },
   "wireit": {
+    "typecheck": {
+      "dependencies": [
+        "./workspaces/schema:typecheck",
+        "./workspaces/server:typecheck",
+        "./workspaces/client:typecheck",
+        "./workspaces/test:typecheck"
+      ]
+    },
     "lint": {
       "dependencies": [
         "./workspaces/schema:lint",

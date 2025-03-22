@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import eslint from '@eslint/js';
 import * as eslintConfigPrettier from 'eslint-config-prettier';
 import eslintPluginImport from 'eslint-plugin-import';

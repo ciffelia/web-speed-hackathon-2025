@@ -15,7 +15,7 @@
     "sourceMap": true,
     "target": "ESNext"
   },
-  "exclude": ["dist"],
+  "exclude": ["dist", "../client/dist"],
   "extends": "@wsh-2025/configs/tsconfig.json",
   "include": ["**/*", "**/*.mjs", "../client/**/*"]
 }
