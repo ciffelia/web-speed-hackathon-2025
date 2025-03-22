@@ -90,6 +90,9 @@
         "RSDOCTOR": {
           "external": true
         },
+        "REACT_PROFILING": {
+          "external": true
+        },
         "API_BASE_URL": {
           "external": true
         }

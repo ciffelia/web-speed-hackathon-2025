@@ -57,6 +57,10 @@ const config = {
   ],
   resolve: {
     alias: {
+      'react-dom$':
+        process.env['NODE_ENV'] !== 'development' && process.env['REACT_PROFILING']
+          ? 'react-dom/profiling'
+          : 'react-dom',
       // workaround for rspack
       'uno.css$': path.resolve(import.meta.dirname, '__uno.css'),
     },
