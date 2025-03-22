@@ -63,13 +63,12 @@ jobs:
         env:
           RSDOCTOR: 'true'
 
-      - run: ls -la workspaces/client/dist
-
       - name: Upload Rsdoctor report
         uses: actions/upload-artifact@v4
         with:
           name: rsdoctor-report
           path: workspaces/client/dist/.rsdoctor
+          include-hidden-files: true
           if-no-files-found: error
 
   metadata:
