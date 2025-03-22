@@ -1,4 +1,3 @@
-import FeatureExplainImageUrl from '@wsh-2025/client/assets/timetable/feature-explain.png';
 import { Dialog } from '@wsh-2025/client/src/features/dialog/components/Dialog';
 import { useCloseNewFeatureDialog } from '@wsh-2025/client/src/pages/timetable/hooks/useCloseNewFeatureDialog';
 
@@ -41,7 +40,7 @@ export const NewTimetableFeatureDialog = ({ isOpen }: Props) => {
           className="mb-[24px] aspect-video w-full"
           decoding="async"
           loading="lazy"
-          src={FeatureExplainImageUrl}
+          src="/public/timetable-feature-explain.png"
         />
 
         <div className="flex flex-row justify-center">

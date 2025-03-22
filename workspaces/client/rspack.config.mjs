@@ -26,10 +26,6 @@ const config = {
           loader: 'swc-loader',
         },
       },
-      {
-        test: /\.png$/,
-        type: 'asset/resource',
-      },
     ],
   },
   optimization: {
@@ -37,6 +33,7 @@ const config = {
   },
   output: {
     chunkFilename: 'chunk-[contenthash].js',
+    clean: true,
     filename: 'main-[contenthash].js',
     path: path.resolve(import.meta.dirname, './dist'),
     publicPath: 'auto',
