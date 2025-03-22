@@ -8,6 +8,9 @@
     "format:eslint": "wireit",
     "format:prettier": "wireit",
     "heroku-start": "wireit",
+    "lint": "wireit",
+    "lint:eslint": "wireit",
+    "lint:prettier": "wireit",
     "start": "wireit"
   },
   "dependencies": {
@@ -98,6 +101,15 @@
           "default": "8000"
         }
       }
+    },
+    "lint": {
+      "command": "pnpm run lint:eslint && pnpm run lint:prettier"
+    },
+    "lint:eslint": {
+      "command": "eslint ."
+    },
+    "lint:prettier": {
+      "command": "prettier --check ."
     },
     "format": {
       "command": "pnpm run format:eslint && pnpm run format:prettier"

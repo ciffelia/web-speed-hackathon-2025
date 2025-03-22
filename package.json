@@ -3,9 +3,11 @@
   "license": "MPL-2.0",
   "scripts": {
     "build": "wireit",
+    "format": "wireit",
     "heroku-build": "wireit",
     "heroku-cleanup": "wireit",
     "heroku-start": "wireit",
+    "lint": "wireit",
     "start": "wireit",
     "test": "wireit"
   },
@@ -29,6 +31,22 @@
     }
   },
   "wireit": {
+    "lint": {
+      "dependencies": [
+        "./workspaces/schema:lint",
+        "./workspaces/server:lint",
+        "./workspaces/client:lint",
+        "./workspaces/test:lint"
+      ]
+    },
+    "format": {
+      "dependencies": [
+        "./workspaces/schema:format",
+        "./workspaces/server:format",
+        "./workspaces/client:format",
+        "./workspaces/test:format"
+      ]
+    },
     "start": {
       "dependencies": [
         "./workspaces/server:start"

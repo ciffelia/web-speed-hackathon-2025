@@ -5,7 +5,10 @@
     "build": "wireit",
     "format": "wireit",
     "format:eslint": "wireit",
-    "format:prettier": "wireit"
+    "format:prettier": "wireit",
+    "lint": "wireit",
+    "lint:eslint": "wireit",
+    "lint:prettier": "wireit"
   },
   "dependencies": {
     "@babel/runtime": "7.26.10",
@@ -90,6 +93,15 @@
       "output": [
         "./dist/**/*"
       ]
+    },
+    "lint": {
+      "command": "pnpm run lint:eslint && pnpm run lint:prettier"
+    },
+    "lint:eslint": {
+      "command": "eslint ."
+    },
+    "lint:prettier": {
+      "command": "prettier --check ."
     },
     "format": {
       "command": "pnpm run format:eslint && pnpm run format:prettier"

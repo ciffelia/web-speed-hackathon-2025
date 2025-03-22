@@ -4,7 +4,10 @@
   "scripts": {
     "format": "wireit",
     "format:eslint": "wireit",
-    "format:prettier": "wireit"
+    "format:prettier": "wireit",
+    "lint": "wireit",
+    "lint:eslint": "wireit",
+    "lint:prettier": "wireit"
   },
   "dependencies": {
     "@sinclair/typebox": "0.34.30",
@@ -22,6 +25,15 @@
     "wireit": "0.14.9"
   },
   "wireit": {
+    "lint": {
+      "command": "pnpm run lint:eslint && pnpm run lint:prettier"
+    },
+    "lint:eslint": {
+      "command": "eslint ."
+    },
+    "lint:prettier": {
+      "command": "prettier --check ."
+    },
     "format": {
       "command": "pnpm run format:eslint && pnpm run format:prettier"
     },
