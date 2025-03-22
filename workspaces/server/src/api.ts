@@ -107,7 +107,7 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
           return void 0;
         },
       });
-      reply.code(200).send(channels);
+      reply.code(200).header('cache-control', 'public, max-age=2592000, immutable').send(channels);
     },
   });
 
@@ -138,7 +138,7 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
       if (channel == null) {
         return reply.code(404).send();
       }
-      reply.code(200).send(channel);
+      reply.code(200).header('cache-control', 'public, max-age=2592000, immutable').send(channel);
     },
   });
 
@@ -184,7 +184,7 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
           },
         },
       });
-      reply.code(200).send(episodes);
+      reply.code(200).header('cache-control', 'public, max-age=2592000, immutable').send(episodes);
     },
   });
 
@@ -226,7 +226,7 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
       if (episode == null) {
         return reply.code(404).send();
       }
-      reply.code(200).send(episode);
+      reply.code(200).header('cache-control', 'public, max-age=2592000, immutable').send(episode);
     },
   });
 
@@ -271,7 +271,7 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
           },
         },
       });
-      reply.code(200).send(series);
+      reply.code(200).header('cache-control', 'public, max-age=2592000, immutable').send(series);
     },
   });
 
@@ -312,7 +312,7 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
       if (series == null) {
         return reply.code(404).send();
       }
-      reply.code(200).send(series);
+      reply.code(200).header('cache-control', 'public, max-age=2592000, immutable').send(series);
     },
   });
 
@@ -348,7 +348,7 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
           );
         },
       });
-      reply.code(200).send(programs);
+      reply.code(200).header('cache-control', 'public, max-age=2592000, immutable').send(programs);
     },
   });
 
@@ -399,7 +399,7 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
           },
         },
       });
-      reply.code(200).send(programs);
+      reply.code(200).header('cache-control', 'public, max-age=2592000, immutable').send(programs);
     },
   });
 
@@ -446,7 +446,7 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
       if (program == null) {
         return reply.code(404).send();
       }
-      reply.code(200).send(program);
+      reply.code(200).header('cache-control', 'public, max-age=2592000, immutable').send(program);
     },
   });
 
@@ -512,7 +512,7 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
         }
       }
 
-      reply.code(200).send(modules);
+      reply.code(200).header('cache-control', 'public, max-age=2592000, immutable').send(modules);
     },
   });
 
