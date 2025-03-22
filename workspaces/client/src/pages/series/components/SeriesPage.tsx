@@ -35,6 +35,8 @@ export const SeriesPage = () => {
         <header className="mb-[24px] flex w-full flex-row items-start justify-between gap-[24px]">
           <Flipped stagger flipId={`series-${series.id}`}>
             <img
+              loading="lazy"
+              decoding="async"
               alt=""
               className="h-auto w-[400px] shrink-0 grow-0 rounded-[8px] border-[2px] border-solid border-[#FFFFFF1F]"
               src={series.thumbnailUrl}
