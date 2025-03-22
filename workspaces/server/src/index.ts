@@ -55,8 +55,15 @@ async function main() {
   app.register(registerSsr);
 
   await app.ready();
-  const address = await app.listen({ host: '0.0.0.0', port: Number(process.env['PORT']) });
+  const address = await app.listen(
+    process.env['LISTEN_HEROKU']
+      ? { path: '/tmp/nginx.socket' }
+      : { host: '0.0.0.0', port: Number(process.env['PORT']) },
+  );
   console.log(`Server listening at ${address}`);
+  if (process.env['LISTEN_HEROKU']) {
+    await fs.writeFile('/tmp/app-initialized', '');
+  }
 }
 
 void main();
