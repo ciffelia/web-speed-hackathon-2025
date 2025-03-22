@@ -15,7 +15,8 @@
     },
     "skipLibCheck": true,
     "sourceMap": true,
-    "target": "ESNext"
+    "target": "ESNext",
+    "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo"
   },
   "exclude": ["./dist", "./streams", "../client/dist"],
   "extends": "@wsh-2025/configs/tsconfig.json",
