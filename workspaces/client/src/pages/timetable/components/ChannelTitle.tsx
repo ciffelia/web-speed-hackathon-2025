@@ -18,11 +18,11 @@ export const ChannelTitle = ({ channelId }: Props) => {
     <div className="relative">
       <div className={`border-x-solid h-[72px] w-auto border-x-[1px] border-x-[#212121] p-[14px]`} style={{ width }}>
         <img
-          loading="lazy"
-          decoding="async"
           alt={channel.name}
           className="object-contains size-full"
+          decoding="async"
           draggable={false}
+          loading="lazy"
           src={channel.logoUrl}
         />
       </div>

@@ -29,10 +29,10 @@ export const SignOutDialog = ({ isOpen, onClose }: Props) => {
       <div className="size-full">
         <div className="mb-[16px] flex w-full flex-row justify-center">
           <img
-            loading="lazy"
-            decoding="async"
             className="object-contain"
+            decoding="async"
             height={36}
+            loading="lazy"
             src="/public/arema.svg"
             width={98}
           />

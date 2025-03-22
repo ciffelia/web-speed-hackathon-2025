@@ -31,10 +31,10 @@ export const ProgramDetailDialog = ({ isOpen, program }: Props): ReactElement =>
           <div className="line-clamp-5">{program.description}</div>
         </div>
         <img
-          loading="lazy"
-          decoding="async"
           alt=""
           className="mb-[24px] aspect-video w-full rounded-[8px] border-[2px] border-solid border-[#FFFFFF1F]"
+          decoding="async"
+          loading="lazy"
           src={program.thumbnailUrl}
         />
 
@@ -47,10 +47,10 @@ export const ProgramDetailDialog = ({ isOpen, program }: Props): ReactElement =>
               <div className="line-clamp-5">{episode.description}</div>
             </div>
             <img
-              loading="lazy"
-              decoding="async"
               alt=""
               className="mb-[24px] aspect-video w-full rounded-[8px] border-[2px] border-solid border-[#FFFFFF1F]"
+              decoding="async"
+              loading="lazy"
               src={episode.thumbnailUrl}
             />
           </>

@@ -65,11 +65,11 @@ export const Layout = ({ children }: Props) => {
         >
           <Link className="block flex w-[188px] items-center justify-center px-[8px]" to="/">
             <img
-              loading="lazy"
-              decoding="async"
               alt="AREMA"
               className="object-contain"
+              decoding="async"
               height={36}
+              loading="lazy"
               src="/public/arema.svg"
               width={98}
             />

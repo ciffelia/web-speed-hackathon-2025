@@ -102,10 +102,10 @@ export const ProgramPage = () => {
             {isArchivedRef.current ? (
               <div className="relative size-full">
                 <img
-                  loading="lazy"
-                  decoding="async"
                   alt=""
                   className="aspect-video w-full"
+                  decoding="async"
+                  loading="lazy"
                   src={program.thumbnailUrl}
                 />
 
@@ -134,10 +134,10 @@ export const ProgramPage = () => {
             ) : (
               <div className="relative size-full">
                 <img
-                  loading="lazy"
-                  decoding="async"
                   alt=""
                   className="aspect-video w-full"
+                  decoding="async"
+                  loading="lazy"
                   src={program.thumbnailUrl}
                 />
 

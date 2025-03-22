@@ -14,10 +14,10 @@ export const NewTimetableFeatureDialog = ({ isOpen }: Props) => {
       <div className="size-full">
         <div className="mb-[16px] flex w-full flex-row justify-center">
           <img
-            loading="lazy"
-            decoding="async"
             className="object-contain"
+            decoding="async"
             height={36}
+            loading="lazy"
             src="/public/arema.svg"
             width={98}
           />
@@ -37,10 +37,10 @@ export const NewTimetableFeatureDialog = ({ isOpen }: Props) => {
         </p>
 
         <img
-          loading="lazy"
-          decoding="async"
           alt=""
           className="mb-[24px] aspect-video w-full"
+          decoding="async"
+          loading="lazy"
           src={FeatureExplainImageUrl}
         />
 

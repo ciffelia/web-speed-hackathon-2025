@@ -52,10 +52,10 @@ export const EpisodePage = () => {
             {isSignInRequired ? (
               <div className="relative size-full">
                 <img
-                  loading="lazy"
-                  decoding="async"
                   alt=""
                   className="aspect-video w-full"
+                  decoding="async"
+                  loading="lazy"
                   src={episode.thumbnailUrl}
                 />
 
@@ -78,10 +78,10 @@ export const EpisodePage = () => {
                   <AspectRatio ratioHeight={9} ratioWidth={16}>
                     <div className="grid size-full">
                       <img
-                        loading="lazy"
-                        decoding="async"
                         alt=""
                         className="size-full place-self-stretch [grid-area:1/-1]"
+                        decoding="async"
+                        loading="lazy"
                         src={episode.thumbnailUrl}
                       />
                       <div className="size-full place-self-stretch bg-[#00000077] [grid-area:1/-1]" />
