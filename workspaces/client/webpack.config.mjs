@@ -1,6 +1,7 @@
 import path from 'node:path';
 
 import UnoCSS from '@unocss/webpack';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
@@ -40,6 +41,7 @@ const config = {
     ],
   },
   optimization: {
+    minimizer: ['...', new CssMinimizerPlugin()],
     realContentHash: true,
   },
   output: {

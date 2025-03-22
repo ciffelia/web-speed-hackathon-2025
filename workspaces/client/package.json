@@ -60,6 +60,7 @@
     "@wsh-2025/configs": "workspace:*",
     "core-js": "3.41.0",
     "css-loader": "7.1.2",
+    "css-minimizer-webpack-plugin": "7.0.2",
     "hls.js": "1.5.17",
     "mini-css-extract-plugin": "2.9.2",
     "shaka-player": "4.12.5",
