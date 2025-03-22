@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { PassThrough } from 'node:stream';
 import { fileURLToPath } from 'node:url';
 
 import fastifyStatic from '@fastify/static';
@@ -9,7 +10,7 @@ import type { FastifyInstance } from 'fastify';
 import { createStandardRequest } from 'fastify-standard-request-reply';
 import htmlescape from 'htmlescape';
 import { StrictMode } from 'react';
-import { renderToString } from 'react-dom/server';
+import { renderToPipeableStream } from 'react-dom/server';
 import { createStaticHandler, createStaticRouter, StaticRouterProvider } from 'react-router';
 
 export function registerSsr(app: FastifyInstance): void {
@@ -44,7 +45,7 @@ export function registerSsr(app: FastifyInstance): void {
     const storeHydrateScript = `window.__zustandHydrationData = JSON.parse(${htmlescape(JSON.stringify(store.getState()))});`;
 
     const router = createStaticRouter(handler.dataRoutes, context);
-    const html = renderToString(
+    const { pipe } = renderToPipeableStream(
       <StrictMode>
         <StoreProvider createStore={() => store}>
           <StaticRouterProvider context={context} router={router} />
@@ -52,8 +53,14 @@ export function registerSsr(app: FastifyInstance): void {
         {/* https://github.com/remix-run/react-router/blob/b97a9c848a67e6875735ec1d08554c99a517e318/packages/react-router/lib/dom/server.tsx#L157-L163 */}
         <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: storeHydrateScript }} />
       </StrictMode>,
+      {
+        bootstrapScripts: [globalThis.AREMATV_SCRIPT_URL!],
+        onShellReady() {
+          const stream = new PassThrough();
+          reply.header('content-type', 'text/html').send(stream);
+          pipe(stream);
+        },
+      },
     );
-
-    reply.type('text/html').send('<!DOCTYPE html>' + html);
   });
 }
