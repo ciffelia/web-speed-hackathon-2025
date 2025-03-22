@@ -37,13 +37,6 @@ const config = {
         resourceQuery: /raw/,
         type: 'asset/source',
       },
-      {
-        resourceQuery: /arraybuffer/,
-        type: 'javascript/auto',
-        use: {
-          loader: 'arraybuffer-loader',
-        },
-      },
     ],
   },
   optimization: {

@@ -58,7 +58,6 @@
     "@unocss/reset": "66.1.0-beta.5",
     "@unocss/webpack": "66.1.0-beta.5",
     "@wsh-2025/configs": "workspace:*",
-    "arraybuffer-loader": "1.0.8",
     "core-js": "3.41.0",
     "css-loader": "7.1.2",
     "hls.js": "1.5.17",
