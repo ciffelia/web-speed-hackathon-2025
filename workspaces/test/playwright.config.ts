@@ -18,7 +18,7 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'], channel: 'chrome' }, // chromiumはh264に対応していないためChromeを使用
     },
   ],
-  reporter: 'list',
+  reporter: process.env['CI'] ? [['list'], ['blob'], ['./reporter.ts']] : 'list',
   retries: 0,
   testDir: './src',
   timeout: 300_000,

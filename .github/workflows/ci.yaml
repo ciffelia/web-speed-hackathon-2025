@@ -68,3 +68,136 @@ jobs:
 
       - if: always()
         run: cat server.log
+
+  metadata:
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+    outputs:
+      created-at: ${{ steps.gh-api.outputs.created-at }}
+    steps:
+      - id: gh-api
+        run: gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/attempts/$GITHUB_RUN_ATTEMPT" --jq '"created-at=" + .created_at' >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  test-sharding:
+    name: test-sharding (${{ matrix.shardIndex }}/${{ matrix.shardTotal }})
+    needs: [metadata]
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3]
+        shardTotal: [3]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: sudo apt-get update && sudo apt-get -y install fonts-ipafont fonts-ipaexfont
+
+      - run: pnpm --filter "@wsh-2025/test" exec playwright install chromium
+
+      - run: pnpm run build
+
+      - run: bash -c 'pnpm run start &> server.log' &
+
+      - run: pnpm --filter "@wsh-2025/test" exec playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+        env:
+          FORCE_COLOR: true
+          ACTIONS_RUN_CREATED_AT: ${{ needs.metadata.outputs.created-at }}
+          REPORT_URL: ${{ secrets.REPORT_URL }}
+          REPORT_TOKEN: ${{ secrets.REPORT_TOKEN }}
+
+      - if: always()
+        run: cat server.log
+
+      - name: Upload blob report
+        if: !cancelled()
+        uses: actions/upload-artifact@v4
+        with:
+          name: blob-report-${{ matrix.shardIndex }}
+          path: workspaces/test/blob-report
+          retention-days: 1
+
+      - name: Collect changed files
+        if: !cancelled()
+        run: |
+          git add -N .
+          git diff --diff-filter=d --name-only -z | tar cf changed-files.tar --null --files-from=-
+
+      - name: Upload changed files archive
+        if: !cancelled()
+        uses: actions/upload-artifact@v4
+        with:
+          name: changed-files-${{ matrix.shardIndex }}
+          path: changed-files.tar
+          if-no-files-found: error
+          compression-level: 0
+
+  test-merge-reports:
+    if: ${{ !cancelled() }}
+    needs: [test-sharding]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Download blob reports
+        uses: actions/download-artifact@v4
+        with:
+          path: workspaces/test/all-blob-reports
+          pattern: blob-report-*
+          merge-multiple: true
+
+      - name: Merge into HTML Report
+        run: pnpm --filter "@wsh-2025/test" exec playwright merge-reports --reporter html,github ./all-blob-reports
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: workspaces/test/playwright-report
+          if-no-files-found: error
+
+  test-merge-changed-files:
+    if: ${{ !cancelled() }}
+    needs: [test-sharding]
+    runs-on: ubuntu-24.04
+    permissions: {}
+    steps:
+      - name: Download changed files
+        uses: actions/download-artifact@v4
+        with:
+          path: all-changed-files-archive
+          pattern: changed-files-*
+          merge-multiple: true
+
+      - name: Extract changed files
+        run: |
+          mkdir -p all-changed-files
+          for file in all-changed-files-archive/*; do tar xf "$file" -C all-changed-files; done
+
+      - name: Upload changed files
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-changed-files
+          path: all-changed-files
+          if-no-files-found: error

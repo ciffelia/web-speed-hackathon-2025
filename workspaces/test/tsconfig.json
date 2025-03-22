@@ -14,5 +14,5 @@
   },
   "exclude": ["./dist", "./streams", "../client/dist"],
   "extends": "@wsh-2025/configs/tsconfig.json",
-  "include": ["./src/**/*", "./playwright.config.ts"]
+  "include": ["./src/**/*", "./playwright.config.ts", "./reporter.ts"]
 }
