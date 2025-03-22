@@ -31,12 +31,11 @@ export const Layout = ({ children }: Props) => {
   const authDialogType = useAuthDialogType();
   const user = useAuthUser();
 
-  const [scrollTopOffset, setScrollTopOffset] = useState(0);
   const [shouldHeaderBeTransparent, setShouldHeaderBeTransparent] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrollTopOffset(window.scrollY);
+      setShouldHeaderBeTransparent(window.scrollY > 80);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -45,10 +44,6 @@ export const Layout = ({ children }: Props) => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
-  useEffect(() => {
-    setShouldHeaderBeTransparent(scrollTopOffset > 80);
-  }, [scrollTopOffset]);
 
   const isSignedIn = user != null;
 
