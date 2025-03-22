@@ -91,7 +91,7 @@
       ]
     },
     "heroku-start": {
-      "command": "mkdir -p /var/cache && gunzip -kf database.sqlite.gz && tsx ./src/index.ts",
+      "command": "gunzip -kf database.sqlite.gz && tsx ./src/index.ts",
       "service": true,
       "env": {
         "API_BASE_URL": {
