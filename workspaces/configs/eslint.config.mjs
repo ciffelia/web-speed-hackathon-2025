@@ -5,6 +5,7 @@ import * as eslintConfigPrettier from 'eslint-config-prettier';
 import eslintPluginImport from 'eslint-plugin-import';
 import eslintPluginReact from 'eslint-plugin-react';
 import eslintPluginSort from 'eslint-plugin-sort';
+import eslintPluginPerfectionist from 'eslint-plugin-perfectionist';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -35,6 +36,7 @@ const configs = [
       import: eslintPluginImport,
       react: eslintPluginReact,
       sort: eslintPluginSort,
+      perfectionist: eslintPluginPerfectionist,
     },
     rules: {
       ...eslint.configs.recommended.rules,
@@ -71,13 +73,15 @@ const configs = [
           'newlines-between': 'always',
         },
       ],
-      'react/jsx-sort-props': [
+      'react/jsx-sort-props': 'off',
+      'perfectionist/sort-jsx-props': [
         'error',
         {
-          callbacksLast: true,
-          ignoreCase: false,
-          reservedFirst: ['key', 'ref'],
-          shorthandFirst: true,
+          groups: ['first', 'shorthand', 'unknown', 'callback'],
+          customGroups: {
+            first: ['^key$', '^ref$'],
+            callback: '^on.+',
+          },
         },
       ],
       'sort/imports': ['off'],
