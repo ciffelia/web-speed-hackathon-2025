@@ -9,14 +9,23 @@ export const prefetch = async (store: ReturnType<typeof createStore>) => {
   return { user };
 };
 
+const stylesheetId = 'arematv-main-stylesheet';
+const scriptId = 'arematv-main-script';
+
 export const Document = () => {
+  // @ts-expect-error ..........
+  const stylesheetUrl = (globalThis.AREMATV_STYLESHEET_URL ??
+    document.getElementById(stylesheetId)?.getAttribute('href')) as string;
+  // @ts-expect-error ..........
+  const scriptUrl = (globalThis.AREMATV_SCRIPT_URL ?? document.getElementById(scriptId)?.getAttribute('src')) as string;
+
   return (
     <html className="size-full" lang="ja">
       <head>
         <meta charSet="UTF-8" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <link href="/public/main.css" rel="stylesheet" />
-        <script src="/public/main.js"></script>
+        <link href={stylesheetUrl} id={stylesheetId} rel="stylesheet" />
+        <script id={scriptId} src={scriptUrl}></script>
       </head>
       <body className="size-full bg-[#000000] text-[#ffffff]">
         <Suspense>
