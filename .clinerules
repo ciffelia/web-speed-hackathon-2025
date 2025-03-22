@@ -1,0 +1,131 @@
+# AremaTV
+
+## 概要
+
+このアプリケーションは、動画ストリーミングサービスのプラットフォームです。ユーザーはチャンネル、シリーズ、エピソードを閲覧し、動画を視聴することができます。アプリケーションはモノレポ構造で、クライアント、サーバー、スキーマ定義などの複数のパッケージで構成されています。
+
+このアプリケーションは、Web Speed Hackathon 2025のために開発されています。
+
+## 技術スタック
+
+### 全体
+
+- **言語**: TypeScript
+- **パッケージマネージャ**: pnpm (ワークスペース機能を使用したモノレポ)
+- **タスク管理**: wireit (依存関係を持つタスクの実行)
+- **Node.js**: v22.14.0
+
+### クライアント側
+
+- **フレームワーク**: React 19.0.0
+- **ルーティング**: React Router 7
+- **状態管理**: Zustand 5 (レンズパターンを使用した状態の分割)
+- **スタイリング**: UnoCSS (Tailwind風のユーティリティファーストCSSフレームワーク)
+- **フォーム管理**: Final Form
+- **日付処理**: Luxon
+- **ビルドツール**: Webpack 5
+- **動画プレイヤー**:
+  - Shaka Player
+  - HLS.js
+  - Video.js
+
+### サーバー側
+
+- **フレームワーク**: Fastify 5
+- **データベース**: LibSQL (SQLiteベース)
+- **ORM**: Drizzle ORM
+- **API仕様**: OpenAPI/Swagger
+- **スキーマバリデーション**: Zod
+- **認証**: セッションベース (fastify-session)
+- **SSR**: React + React Router
+
+## アプリケーション構造
+
+### ワークスペース
+
+- **client**: フロントエンドアプリケーション
+- **server**: バックエンドサーバー
+- **schema**: データベースとAPIのスキーマ定義
+- **configs**: 共有設定ファイル
+- **test**: テストコード
+
+### データモデル
+
+- **stream**: ストリーミングデータ
+- **series**: シリーズ（番組）
+- **episode**: エピソード（各回）
+- **channel**: チャンネル
+- **program**: 番組表の項目
+- **recommendedItem/recommendedModule**: おすすめコンテンツ
+- **user**: ユーザー情報
+
+### APIエンドポイント
+
+- **チャンネル関連**: `/api/channels`, `/api/channels/:channelId`
+- **エピソード関連**: `/api/episodes`, `/api/episodes/:episodeId`
+- **シリーズ関連**: `/api/series`, `/api/series/:seriesId`
+- **番組表関連**: `/api/timetable`, `/api/programs`, `/api/programs/:programId`
+- **おすすめコンテンツ関連**: `/api/recommended/:referenceId`
+- **認証関連**: `/api/signIn`, `/api/signUp`, `/api/users/me`, `/api/signOut`
+
+### ストリーミング
+
+- **HLS (HTTP Live Streaming)** 形式を使用
+- **エピソードストリーミング**: `/streams/episode/:episodeId/playlist.m3u8` (VOD)
+- **チャンネルストリーミング**: `/streams/channel/:channelId/playlist.m3u8` (ライブストリーミング)
+- **.ts ファイル** (MPEG-2 Transport Stream) を使用した動画チャンク
+
+### クライアント側の状態管理
+
+- **機能ごとのストアスライス**:
+
+  - auth: 認証情報
+  - channel: チャンネル情報
+  - episode: エピソード情報
+  - layout: レイアウト設定
+  - program: 番組情報
+  - recommended: おすすめコンテンツ
+  - series: シリーズ情報
+  - timetable: 番組表情報
+
+- **ページごとのストアスライス**:
+  - episode: エピソードページの状態
+  - program: 番組ページの状態
+  - timetable: 番組表ページの状態
+
+### ルーティング
+
+- **/** - ホームページ
+- **/episodes/:episodeId** - エピソードページ
+- **/programs/:programId** - 番組ページ
+- **/series/:seriesId** - シリーズページ
+- **/timetable** - 番組表ページ
+- **\*** - 404ページ
+
+## アーキテクチャの特徴
+
+### サーバーサイドレンダリング (SSR)
+
+- React ServerのrenderToStringを使用
+- クライアントサイドでのハイドレーション
+- 初期状態のプリフェッチとクライアントへの受け渡し
+
+### 動画プレイヤー
+
+- 複数のプレイヤーライブラリをサポート (Shaka Player, HLS.js, Video.js)
+- 共通インターフェース (PlayerWrapper) による抽象化
+- HLSストリーミングのサポート
+- バッファリング設定の最適化
+
+### データフェッチと状態管理
+
+- Zustandを使用した状態管理
+- レンズパターンによる状態の分割
+- ページごとのプリフェッチ機能
+- SSRからのデータハイドレーション
+
+### パフォーマンス最適化
+
+- コンポーネントの遅延ロード (lazy loading)
+- 画像のプリロード
+- バッファリング設定の最適化
