@@ -13,8 +13,6 @@ import { createStaticHandler, createStaticRouter, StaticRouterProvider } from 'r
 
 export function registerSsr(app: FastifyInstance): void {
   app.register(fastifyStatic, {
-    immutable: true,
-    maxAge: '30d',
     prefix: '/public/',
     root: [
       path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../client/dist'),
