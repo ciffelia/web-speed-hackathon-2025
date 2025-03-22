@@ -30,10 +30,6 @@ const config = {
         test: /\.png$/,
         type: 'asset/resource',
       },
-      {
-        resourceQuery: /raw/,
-        type: 'asset/source',
-      },
     ],
   },
   optimization: {
