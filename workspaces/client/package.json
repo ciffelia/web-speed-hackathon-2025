@@ -12,7 +12,6 @@
     "typecheck": "wireit"
   },
   "dependencies": {
-    "@babel/runtime": "7.26.10",
     "@better-fetch/fetch": "1.1.15",
     "@dhmk/zustand-lens": "5.0.0",
     "@epic-web/restore-scroll": "1.1.1",
@@ -48,12 +47,9 @@
     "zustand-di": "0.0.16"
   },
   "devDependencies": {
-    "@babel/core": "7.26.0",
-    "@babel/preset-env": "7.26.0",
-    "@babel/preset-react": "7.25.9",
-    "@babel/preset-typescript": "7.26.0",
     "@iconify/json": "2.2.317",
     "@iconify/types": "2.0.0",
+    "@swc/core": "1.11.11",
     "@types/lodash": "4.17.16",
     "@types/luxon": "3.4.2",
     "@types/react": "19.0.1",
@@ -64,12 +60,12 @@
     "@unocss/webpack": "66.1.0-beta.5",
     "@wsh-2025/configs": "workspace:*",
     "arraybuffer-loader": "1.0.8",
-    "babel-loader": "9.2.1",
     "core-js": "3.41.0",
     "css-loader": "7.1.2",
     "hls.js": "1.5.17",
     "mini-css-extract-plugin": "2.9.2",
     "shaka-player": "4.12.5",
+    "swc-loader": "0.2.6",
     "typescript": "5.7.2",
     "unocss": "66.1.0-beta.5",
     "video.js": "8.21.0",
@@ -86,6 +82,7 @@
         "../../pnpm-lock.yaml",
         "../schema/src/**/*",
         "./src/**/*",
+        "./.swcrc",
         "./uno.config.ts",
         "./webpack.config.mjs"
       ],

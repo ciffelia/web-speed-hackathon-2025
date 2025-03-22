@@ -1,0 +1,21 @@
+{
+  "$schema": "https://swc.rs/schema.json",
+  "env": {
+    "coreJs": "3.41",
+    "debug": true,
+    "forceAllTransforms": true,
+    "mode": "entry",
+    "targets": "defaults"
+  },
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": false
+    },
+    "transform": {
+      "react": {
+        "runtime": "automatic"
+      }
+    }
+  }
+}
