@@ -8,6 +8,7 @@ import tseslint from 'typescript-eslint';
 
 /** @type {import('eslint').Linter.Config[]} */
 const configs = [
+  { ignores: ['**/prettier.config.*', '**/eslint.config.*'] },
   {
     files: ['**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}'],
     languageOptions: {
