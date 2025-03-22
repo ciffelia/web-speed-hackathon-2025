@@ -7,16 +7,14 @@ import { useMergeRefs } from 'use-callback-ref';
 import { EpisodeItem } from '@wsh-2025/client/src/features/recommended/components/EpisodeItem';
 import { SeriesItem } from '@wsh-2025/client/src/features/recommended/components/SeriesItem';
 import { useCarouselItemWidth } from '@wsh-2025/client/src/features/recommended/hooks/useCarouselItemWidth';
-import { useScrollSnap } from '@wsh-2025/client/src/features/recommended/hooks/useScrollSnap';
 
 interface Props {
   module: ArrayValues<StandardSchemaV1.InferOutput<typeof schema.getRecommendedModulesResponse>>;
 }
 
 export const CarouselSection = ({ module }: Props) => {
-  const containerRefForScrollSnap = useScrollSnap({ scrollPadding: 24 });
   const { ref: containerRefForItemWidth, width: itemWidth } = useCarouselItemWidth();
-  const mergedRef = useMergeRefs([containerRefForItemWidth, containerRefForScrollSnap]);
+  const mergedRef = useMergeRefs([containerRefForItemWidth]);
 
   return (
     <>
@@ -25,11 +23,11 @@ export const CarouselSection = ({ module }: Props) => {
         <div
           key={module.id}
           ref={mergedRef}
-          className={`relative mx-[-24px] flex flex-row gap-x-[12px] overflow-x-auto overflow-y-hidden pl-[24px] pr-[56px]`}
+          className={`scroll-p-l-[24px] relative mx-[-24px] flex snap-x snap-mandatory flex-row gap-x-[12px] overflow-x-auto overflow-y-hidden pl-[24px] pr-[56px]`}
           data-scroll-restore={`carousel-${module.id}`}
         >
           {module.items.map((item) => (
-            <div key={item.id} className={`shrink-0 grow-0`} style={{ width: `${itemWidth}px` }}>
+            <div key={item.id} className={`shrink-0 grow-0 snap-start`} style={{ width: `${itemWidth}px` }}>
               {item.series != null ? <SeriesItem series={item.series} /> : null}
               {item.episode != null ? <EpisodeItem episode={item.episode} /> : null}
             </div>
