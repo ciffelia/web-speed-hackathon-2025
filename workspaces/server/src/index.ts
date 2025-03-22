@@ -30,7 +30,19 @@ async function main() {
     throw new Error('Failed to find main.js or main.css');
   }
 
-  const app = fastify();
+  const app = fastify({
+    logger: process.env['LOGGING']
+      ? {
+          transport: {
+            options: {
+              ignore: 'pid,hostname,req.host,req.remoteAddress,req.remotePort',
+              translateTime: 'SYS:HH:MM:ss.l',
+            },
+            target: 'pino-pretty',
+          },
+        }
+      : false,
+  });
 
   // app.addHook('onSend', async (_req, reply) => {
   //   reply.header('cache-control', 'no-store');
