@@ -9,11 +9,17 @@ events {
 }
 
 http {
-	proxy_cache_path /var/cache/nginx keys_zone=zone1:1m max_size=1g inactive=24h;
-	proxy_temp_path  /var/cache/nginx_tmp;
-
 	gzip on;
-	gzip_comp_level 2;
+	gzip_types text/plain
+    text/xml
+    text/css
+    text/javascript
+    application/javascript
+    application/x-javascript
+    application/json
+    application/xml
+    application/xml+rss
+    application/vnd.apple.mpegurl;
 	gzip_min_length 512;
 	gzip_proxied any; # Heroku router sends Via header
 
@@ -40,8 +46,6 @@ http {
 		keepalive_timeout 5;
 
 		location / {
-			add_header X-Nginx-Cache $upstream_cache_status;
-			
 			# Uncomment this if statement to force SSL/redirect http -> https
 			# if ($http_x_forwarded_proto != "https") {
 			#   return 301 https://$host$request_uri;
