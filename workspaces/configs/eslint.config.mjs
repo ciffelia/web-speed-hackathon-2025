@@ -8,10 +8,12 @@ import eslintPluginSort from 'eslint-plugin-sort';
 import eslintPluginPerfectionist from 'eslint-plugin-perfectionist';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import * as regexpPlugin from 'eslint-plugin-regexp';
 
 /** @type {import('eslint').Linter.Config[]} */
 const configs = [
   { ignores: ['**/prettier.config.*', '**/eslint.config.*'] },
+  regexpPlugin.configs['flat/recommended'],
   {
     files: ['**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}'],
     languageOptions: {
