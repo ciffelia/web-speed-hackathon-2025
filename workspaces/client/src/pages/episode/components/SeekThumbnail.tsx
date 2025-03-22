@@ -6,6 +6,10 @@ import { usePointer } from '@wsh-2025/client/src/features/layout/hooks/usePointe
 import { useDuration } from '@wsh-2025/client/src/pages/episode/hooks/useDuration';
 import { useSeekThumbnail } from '@wsh-2025/client/src/pages/episode/hooks/useSeekThumbnail';
 
+// const useSeekThumbnail = (..._args: unknown[]): string => {
+//   return 'data:';
+// };
+
 const SEEK_THUMBNAIL_WIDTH = 160;
 
 interface Props {
