@@ -41,8 +41,7 @@ const config = {
   },
   output: {
     chunkFilename: 'chunk-[contenthash].js',
-    // `main-[contenthash].js` にするとなぜかCSSが壊れる
-    filename: 'main.js',
+    filename: 'main-[contenthash].js',
     path: path.resolve(import.meta.dirname, './dist'),
     publicPath: 'auto',
   },
@@ -58,6 +57,7 @@ const config = {
     UnoCSS(),
     new rspack.CssExtractRspackPlugin({
       chunkFilename: 'chunk-[contenthash].css',
+      filename: 'main-[contenthash].css',
     }),
   ],
   resolve: {
