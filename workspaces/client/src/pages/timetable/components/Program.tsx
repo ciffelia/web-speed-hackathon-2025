@@ -3,7 +3,7 @@ import * as schema from '@wsh-2025/schema/src/api/schema';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 import { ReactElement, useEffect, useRef, useState } from 'react';
-import Ellipsis from 'react-ellipsis-component';
+import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
 import { ArrayValues } from 'type-fest';
 
 import { ProgramDetailDialog } from '@wsh-2025/client/src/pages/timetable/components/ProgramDetailDialog';
@@ -78,7 +78,7 @@ export const Program = ({ height, program }: Props): ReactElement => {
                 color: isBroadcasting ? '#212121' : '#ffffff',
               }}
             >
-              <Ellipsis ellipsis reflowOnResize maxLine={3} text={program.title} visibleLine={3} />
+              <Ellipsis lines={3}>{program.title}</Ellipsis>
             </div>
           </div>
           <div

@@ -1,12 +1,12 @@
 import { DateTime } from 'luxon';
 import { useEffect, useRef } from 'react';
-import Ellipsis from 'react-ellipsis-component';
 import { Flipped } from 'react-flip-toolkit';
 import { Link, Params, useLoaderData, useNavigate, useParams } from 'react-router';
 import { useUpdate } from 'react-use';
 import invariant from 'tiny-invariant';
 
 import { createStore } from '@wsh-2025/client/src/app/createStore';
+import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
 import { Player } from '@wsh-2025/client/src/features/player/components/Player';
 import { PlayerType } from '@wsh-2025/client/src/features/player/constants/player_type';
 import { RecommendedSection } from '@wsh-2025/client/src/features/recommended/components/RecommendedSection';
@@ -147,10 +147,10 @@ export const ProgramPage = () => {
 
         <div className="mb-[24px]">
           <div className="text-[16px] text-[#ffffff]">
-            <Ellipsis ellipsis reflowOnResize maxLine={1} text={program.episode.series.title} visibleLine={1} />
+            <Ellipsis lines={1}>{program.episode.series.title}</Ellipsis>
           </div>
           <h1 className="mt-[8px] text-[22px] font-bold text-[#ffffff]">
-            <Ellipsis ellipsis reflowOnResize maxLine={2} text={program.title} visibleLine={2} />
+            <Ellipsis lines={2}>{program.title}</Ellipsis>
           </h1>
           <div className="mt-[8px] text-[16px] text-[#999999]">
             {DateTime.fromISO(program.startAt).toFormat('L月d日 H:mm')}
@@ -158,7 +158,7 @@ export const ProgramPage = () => {
             {DateTime.fromISO(program.endAt).toFormat('L月d日 H:mm')}
           </div>
           <div className="mt-[16px] text-[16px] text-[#999999]">
-            <Ellipsis ellipsis reflowOnResize maxLine={3} text={program.description} visibleLine={3} />
+            <Ellipsis lines={3}>{program.description}</Ellipsis>
           </div>
         </div>
 
