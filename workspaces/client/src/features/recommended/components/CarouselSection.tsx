@@ -2,7 +2,6 @@ import { ElementScrollRestoration } from '@epic-web/restore-scroll';
 import { StandardSchemaV1 } from '@standard-schema/spec';
 import * as schema from '@wsh-2025/schema/src/api/schema';
 import { ArrayValues } from 'type-fest';
-import { useMergeRefs } from 'use-callback-ref';
 
 import { EpisodeItem } from '@wsh-2025/client/src/features/recommended/components/EpisodeItem';
 import { SeriesItem } from '@wsh-2025/client/src/features/recommended/components/SeriesItem';
@@ -13,8 +12,7 @@ interface Props {
 }
 
 export const CarouselSection = ({ module }: Props) => {
-  const { ref: containerRefForItemWidth, width: itemWidth } = useCarouselItemWidth();
-  const mergedRef = useMergeRefs([containerRefForItemWidth]);
+  const { ref: containerRef, width: itemWidth } = useCarouselItemWidth<HTMLDivElement>();
 
   return (
     <>
@@ -22,7 +20,7 @@ export const CarouselSection = ({ module }: Props) => {
         <h2 className="mb-[16px] w-full text-[22px] font-bold">{module.title}</h2>
         <div
           key={module.id}
-          ref={mergedRef}
+          ref={containerRef}
           className={`scroll-p-l-[24px] relative mx-[-24px] flex snap-x snap-mandatory flex-row gap-x-[12px] overflow-x-auto overflow-y-hidden pl-[24px] pr-[56px]`}
           data-scroll-restore={`carousel-${module.id}`}
         >
