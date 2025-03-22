@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon';
+import { useLoaderData } from 'react-router';
 import invariant from 'tiny-invariant';
 
 import { createStore } from '@wsh-2025/client/src/app/createStore';
-import { useTimetable } from '@wsh-2025/client/src/features/timetable/hooks/useTimetable';
 import { ChannelTitle } from '@wsh-2025/client/src/pages/timetable/components/ChannelTitle';
 import { NewTimetableFeatureDialog } from '@wsh-2025/client/src/pages/timetable/components/NewTimetableFeatureDialog';
 import { ProgramList } from '@wsh-2025/client/src/pages/timetable/components/ProgramList';
@@ -20,11 +20,21 @@ export const prefetch = async (store: ReturnType<typeof createStore>) => {
 };
 
 export const TimetablePage = () => {
-  const record = useTimetable();
   const shownNewFeatureDialog = useShownNewFeatureDialog();
 
-  const channelIds = Object.keys(record);
-  const programLists = Object.values(record);
+  const { channels, programs } = useLoaderData<typeof prefetch>();
+  const channelIds = channels.map((channel) => channel.id);
+  const programLists = channels.map((channel) => {
+    const filteredPrograms = [];
+    for (const program of programs) {
+      if (program.channelId === channel.id) {
+        filteredPrograms.push(program);
+      }
+    }
+    return filteredPrograms.sort((a, b) => {
+      return DateTime.fromISO(a.startAt).toMillis() - DateTime.fromISO(b.startAt).toMillis();
+    });
+  });
 
   return (
     <>
