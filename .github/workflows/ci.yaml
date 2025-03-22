@@ -62,7 +62,7 @@ jobs:
 
       - run: pnpm run build
 
-      - run: sh -c 'pnpm run start &> server.log' &
+      - run: bash -c 'pnpm run start &> server.log' &
 
       - run: pnpm run test
 
