@@ -291,7 +291,7 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
         },
       },
     } satisfies FastifyZodOpenApiSchema,
-    handler: async function getProgramById(req, reply) {
+    handler: async function getSeriesById(req, reply) {
       const database = getDatabase();
 
       const series = await database.query.series.findFirst({
