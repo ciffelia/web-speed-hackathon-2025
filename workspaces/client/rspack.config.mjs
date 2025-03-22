@@ -1,25 +1,20 @@
 import path from 'node:path';
 
+import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
+import { rspack } from '@rspack/core';
 import UnoCSS from '@unocss/webpack';
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import webpack from 'webpack';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
-/** @type {import('webpack').Configuration} */
+/** @type {import('@rspack/core').Configuration} */
 const config = {
-  cache: process.env['CI']
-    ? false
-    : {
-        allowCollectingMemory: true,
-        type: 'filesystem',
-      },
-  // devtool: 'source-map',
   entry: './src/main.tsx',
   mode: process.env['NODE_ENV'] === 'development' ? 'development' : 'production',
   module: {
     rules: [
-      { test: /\.css$/i, use: [MiniCssExtractPlugin.loader, 'css-loader'] },
+      {
+        test: /\.css$/i,
+        type: 'javascript/auto',
+        use: [rspack.CssExtractRspackPlugin.loader, 'css-loader'],
+      },
       {
         exclude: [/node_modules\/video\.js/, /node_modules\/@videojs/],
         resolve: {
@@ -27,6 +22,7 @@ const config = {
         },
         test: /\.(?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$/,
         use: {
+          // TODO: migrate to builtin:swc-loader
           loader: 'swc-loader',
         },
       },
@@ -41,7 +37,6 @@ const config = {
     ],
   },
   optimization: {
-    minimizer: ['...', new CssMinimizerPlugin()],
     realContentHash: true,
   },
   output: {
@@ -52,14 +47,24 @@ const config = {
     publicPath: 'auto',
   },
   plugins: [
-    new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
-    new webpack.EnvironmentPlugin({ API_BASE_URL: '/api' }),
+    process.env['RSDOCTOR'] &&
+      new RsdoctorRspackPlugin({
+        disableClientServer: true,
+        supports: {
+          generateTileGraph: true,
+        },
+      }),
+    new rspack.EnvironmentPlugin({ API_BASE_URL: '/api' }),
     UnoCSS(),
-    new MiniCssExtractPlugin({
+    new rspack.CssExtractRspackPlugin({
       chunkFilename: 'chunk-[contenthash].css',
     }),
   ],
   resolve: {
+    alias: {
+      // workaround for rspack
+      'uno.css$': path.resolve(import.meta.dirname, '__uno.css'),
+    },
     extensions: ['.js', '.cjs', '.mjs', '.ts', '.cts', '.mts', '.tsx', '.jsx'],
   },
 };

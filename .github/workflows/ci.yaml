@@ -57,12 +57,14 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm run build
+        env:
+          RSDOCTOR: 'true'
 
-      - name: Webpack Bundle Analyzer
+      - name: Upload Rsdoctor report
         uses: actions/upload-artifact@v4
         with:
-          name: webpack-bundle-analyzer
-          path: workspaces/client/dist/report.html
+          name: rsdoctor-report
+          path: workspaces/client/dist/.rsdoctor
           if-no-files-found: error
 
   metadata:
