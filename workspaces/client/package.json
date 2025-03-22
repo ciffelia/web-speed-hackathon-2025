@@ -82,6 +82,17 @@
         "./uno.config.ts",
         "./rspack.config.mjs"
       ],
+      "env": {
+        "NODE_ENV": {
+          "external": true
+        },
+        "RSDOCTOR": {
+          "external": true
+        },
+        "API_BASE_URL": {
+          "external": true
+        }
+      },
       "output": [
         "./dist/**/*"
       ]
