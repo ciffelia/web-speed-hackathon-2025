@@ -11,5 +11,8 @@
     { "rule": "import/order", "severity": "off" },
     { "rule": "sort/*", "severity": "off" }
   ],
-  "git.ignoredRepositories": ["./deploy"]
+  "git.ignoredRepositories": ["./deploy"],
+  "search.exclude": {
+    "/deploy": true
+  }
 }
