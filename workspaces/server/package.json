@@ -66,7 +66,7 @@
       "command": "drizzle-kit generate && drizzle-kit push"
     },
     "database:reset": {
-      "command": "tsx ./tools/seed.ts && gzip -kf database.sqlite.gz"
+      "command": "tsx ./tools/seed.ts && gzip -kf database.sqlite"
     },
     "start": {
       "command": "gunzip -kf database.sqlite.gz && tsx ./src/index.ts",
