@@ -13,6 +13,8 @@
   ],
   "git.ignoredRepositories": ["./deploy"],
   "search.exclude": {
-    "/deploy": true
+    "**/.wireit": true,
+    "**/dist": true,
+    "deploy": true
   }
 }
