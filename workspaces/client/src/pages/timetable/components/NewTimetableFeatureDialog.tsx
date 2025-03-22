@@ -17,7 +17,7 @@ export const NewTimetableFeatureDialog = ({ isOpen }: Props) => {
             decoding="async"
             height={36}
             loading="lazy"
-            src="/public/arema.svg"
+            src="/public/arema.webp"
             width={98}
           />
         </div>

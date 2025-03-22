@@ -70,7 +70,7 @@ export const Layout = ({ children }: Props) => {
               decoding="async"
               height={36}
               loading="lazy"
-              src="/public/arema.svg"
+              src="/public/arema.webp"
               width={98}
             />
           </Link>
