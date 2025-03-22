@@ -1,5 +1,7 @@
 import path from 'node:path';
 
+import UnoCSS from '@unocss/webpack';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
@@ -16,6 +18,7 @@ const config = {
   mode: process.env['NODE_ENV'] === 'development' ? 'development' : 'production',
   module: {
     rules: [
+      { test: /\.css$/i, use: [MiniCssExtractPlugin.loader, 'css-loader'] },
       {
         exclude: [/node_modules\/video\.js/, /node_modules\/@videojs/],
         resolve: {
@@ -58,6 +61,9 @@ const config = {
       },
     ],
   },
+  optimization: {
+    realContentHash: true,
+  },
   output: {
     chunkFilename: 'chunk-[contenthash].js',
     filename: 'main.js',
@@ -67,6 +73,8 @@ const config = {
   plugins: [
     new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
     new webpack.EnvironmentPlugin({ API_BASE_URL: '/api', NODE_ENV: '' }),
+    UnoCSS(),
+    new MiniCssExtractPlugin(),
   ],
   resolve: {
     extensions: ['.js', '.cjs', '.mjs', '.ts', '.cts', '.mts', '.tsx', '.jsx'],
