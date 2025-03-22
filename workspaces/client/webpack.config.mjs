@@ -43,7 +43,7 @@ const config = {
       },
       {
         test: /\.png$/,
-        type: 'asset/inline',
+        type: 'asset/resource',
       },
       {
         resourceQuery: /raw/,
