@@ -5,6 +5,12 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 /** @type {import('webpack').Configuration} */
 const config = {
+  cache: process.env['CI']
+    ? false
+    : {
+        allowCollectingMemory: true,
+        type: 'filesystem',
+      },
   // devtool: 'source-map',
   entry: './src/main.tsx',
   mode: process.env['NODE_ENV'] === 'development' ? 'development' : 'production',
