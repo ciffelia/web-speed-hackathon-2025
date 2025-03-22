@@ -58,6 +58,13 @@ jobs:
 
       - run: pnpm run build
 
+      - name: Webpack Bundle Analyzer
+        uses: actions/upload-artifact@v4
+        with:
+          name: webpack-bundle-analyzer
+          path: workspaces/client/dist/report.html
+          if-no-files-found: error
+
   metadata:
     runs-on: ubuntu-24.04
     permissions:
