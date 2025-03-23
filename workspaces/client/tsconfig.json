@@ -7,10 +7,13 @@
       "@wsh-2025/client/*": ["./*"]
     },
     "skipLibCheck": true,
-    "target": "ESNext",
-    "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo"
+    "target": "ESNext"
   },
-  "exclude": ["dist"],
-  "extends": "@wsh-2025/configs/tsconfig.json",
-  "include": ["**/*", "**/*.mjs"]
+  "extends": "../../tsconfig.base.json",
+  "include": ["src/**/*", "*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"],
+  "references": [
+    {
+      "path": "../schema"
+    }
+  ]
 }

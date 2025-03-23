@@ -12,7 +12,7 @@
     "lint:eslint": "wireit",
     "lint:prettier": "wireit",
     "start": "wireit",
-    "typecheck": "wireit"
+    "typecheck": "tsc --build"
   },
   "dependencies": {
     "@fastify/cookie": "11.0.2",
@@ -103,9 +103,6 @@
           "default": "8000"
         }
       }
-    },
-    "typecheck": {
-      "command": "tsc --noEmit"
     },
     "lint": {
       "command": "pnpm run lint:eslint && pnpm run lint:prettier"

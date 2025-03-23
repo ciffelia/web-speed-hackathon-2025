@@ -7,16 +7,12 @@
     "jsx": "react-jsx",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "outDir": "./dist",
     "paths": {
       "@wsh-2025/schema/*": ["./*"]
     },
     "skipLibCheck": true,
-    "sourceMap": true,
-    "target": "ESNext",
-    "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo"
+    "target": "ESNext"
   },
-  "exclude": ["dist", "../client/dist"],
-  "extends": "@wsh-2025/configs/tsconfig.json",
-  "include": ["**/*", "**/*.mjs", "../client/**/*"]
+  "extends": "../../tsconfig.base.json",
+  "include": ["src/**/*", "*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"]
 }

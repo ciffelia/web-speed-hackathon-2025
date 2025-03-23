@@ -1,0 +1,17 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./workspaces/schema"
+    },
+    {
+      "path": "./workspaces/client"
+    },
+    {
+      "path": "./workspaces/server"
+    },
+    {
+      "path": "./workspaces/test"
+    }
+  ]
+}

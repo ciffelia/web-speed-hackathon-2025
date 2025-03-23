@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "incremental": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "noEmit": true
-  },
-  "extends": "@tsconfig/strictest/tsconfig.json"
-}

@@ -9,7 +9,7 @@
     "lint": "wireit",
     "lint:eslint": "wireit",
     "lint:prettier": "wireit",
-    "typecheck": "wireit",
+    "typecheck": "tsc --build",
     "watch": "rspack build --watch"
   },
   "dependencies": {
@@ -117,9 +117,6 @@
     },
     "format:prettier": {
       "command": "prettier --write ."
-    },
-    "typecheck": {
-      "command": "tsc --noEmit"
     }
   }
 }
