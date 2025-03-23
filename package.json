@@ -26,9 +26,6 @@
   "pnpm": {
     "overrides": {
       "es-abstract": "~1.23.9"
-    },
-    "patchedDependencies": {
-      "shaka-player": "patches/shaka-player.patch"
     }
   },
   "wireit": {

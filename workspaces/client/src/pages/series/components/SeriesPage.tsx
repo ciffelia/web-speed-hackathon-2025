@@ -56,7 +56,7 @@ export const SeriesPage = () => {
 
         {modules[0] != null ? (
           <div>
-            <RecommendedSection module={modules[0]} />
+            <RecommendedSection module={modules[0]} loading="eager" />
           </div>
         ) : null}
       </div>

@@ -5,10 +5,6 @@ type PlayerWrapperConstructor = new () => PlayerWrapper;
 
 export const loadPlayer = async (playerType: PlayerType): Promise<PlayerWrapperConstructor> => {
   switch (playerType) {
-    case PlayerType.ShakaPlayer: {
-      const { ShakaPlayerWrapper } = await import('@wsh-2025/client/src/features/player/logics/ShakaPlayerWrapper');
-      return ShakaPlayerWrapper;
-    }
     case PlayerType.HlsJS: {
       const { HlsJSPlayerWrapper } = await import('@wsh-2025/client/src/features/player/logics/HlsJSPlayerWrapper');
       return HlsJSPlayerWrapper;

@@ -7,11 +7,6 @@ settings:
 overrides:
   es-abstract: ~1.23.9
 
-patchedDependencies:
-  shaka-player:
-    hash: ztcamgtqc3a62la4l6p3d6w4ae
-    path: patches/shaka-player.patch
-
 importers:
 
   .:
@@ -174,9 +169,6 @@ importers:
       hls.js:
         specifier: 1.5.17
         version: 1.5.17
-      shaka-player:
-        specifier: 4.12.5
-        version: 4.12.5(patch_hash=ztcamgtqc3a62la4l6p3d6w4ae)
       swc-loader:
         specifier: 0.2.6
         version: 0.2.6(@swc/core@1.11.11(@swc/helpers@0.5.15))
@@ -3254,9 +3246,6 @@ packages:
   electron-to-chromium@1.5.123:
     resolution: {integrity: sha512-refir3NlutEZqlKaBLK0tzlVLe5P2wDKS7UQt/3SpibizgsRAPOsqQC3ffw1nlv3ze5gjRQZYHoPymgVZkplFA==}
 
-  eme-encryption-scheme-polyfill@2.1.6:
-    resolution: {integrity: sha512-SmQ8UxDkH/8hrjLo6ASo452hIe4dSJzqKmJyrNsvUciEJNxf4z9hewIwF1k/c7A5uRk4GApavPZ6dgqXqfvegw==}
-
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
 
@@ -5644,10 +5633,6 @@ packages:
 
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
-
-  shaka-player@4.12.5:
-    resolution: {integrity: sha512-jJEkASLivZ0Eqg+sIfBJWCWFDzo2l4rfG1e2y5apqphKbDZaMrSCX0Z/B14epJCfStSAwGqKyuC1D+K3e4xBEg==}
-    engines: {node: '>=14'}
 
   shebang-command@1.2.0:
     resolution: {integrity: sha512-EV3L1+UQWGor21OmnvojK36mhg+TyIKDh3iFBKBohr5xeXIhNBcx8oWdgkTEEQ+BEFFYdLRuqMfd5L84N1V5Vg==}
@@ -9646,8 +9631,6 @@ snapshots:
 
   electron-to-chromium@1.5.123: {}
 
-  eme-encryption-scheme-polyfill@2.1.6: {}
-
   emoji-regex@8.0.0: {}
 
   emoji-regex@9.2.2: {}
@@ -12366,10 +12349,6 @@ snapshots:
   setprototypeof@1.1.0: {}
 
   setprototypeof@1.2.0: {}
-
-  shaka-player@4.12.5(patch_hash=ztcamgtqc3a62la4l6p3d6w4ae):
-    dependencies:
-      eme-encryption-scheme-polyfill: 2.1.6
 
   shebang-command@1.2.0:
     dependencies:

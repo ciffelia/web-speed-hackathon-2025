@@ -165,7 +165,7 @@ export const ProgramPage = () => {
 
         {modules[0] != null ? (
           <div className="mt-[24px]">
-            <RecommendedSection module={modules[0]} />
+            <RecommendedSection loading="eager" module={modules[0]} />
           </div>
         ) : null}
 

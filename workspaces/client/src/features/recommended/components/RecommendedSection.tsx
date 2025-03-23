@@ -6,12 +6,13 @@ import { CarouselSection } from '@wsh-2025/client/src/features/recommended/compo
 import { JumbotronSection } from '@wsh-2025/client/src/features/recommended/components/JumbotronSection';
 
 interface Props {
+  loading?: 'lazy' | 'eager';
   module: ArrayValues<StandardSchemaV1.InferOutput<typeof schema.getRecommendedModulesResponse>>;
 }
 
-export const RecommendedSection = ({ module }: Props) => {
+export const RecommendedSection = ({ loading = 'lazy', module }: Props) => {
   if (module.type === 'jumbotron') {
-    return <JumbotronSection module={module} />;
+    return <JumbotronSection loading={loading} module={module} />;
   } else {
     return <CarouselSection module={module} />;
   }

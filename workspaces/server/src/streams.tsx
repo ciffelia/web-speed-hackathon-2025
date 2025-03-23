@@ -135,6 +135,34 @@ export function registerStreams(app: FastifyInstance): void {
 
   app.get<{
     Params: { episodeId: string };
+  }>('/streams/episode/:episodeId/video-small.mp4', async (req, reply) => {
+    const database = getDatabase();
+
+    const episode = await database.query.episode.findFirst({
+      where(episode, { eq }) {
+        return eq(episode.id, req.params.episodeId);
+      },
+      with: {
+        stream: true,
+      },
+    });
+
+    if (episode == null) {
+      throw new Error('The episode is not found.');
+    }
+
+    return reply.sendFile(
+      `${episode.stream.id}.mp4`,
+      path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../streams-mp4-320'),
+      {
+        immutable: true,
+        maxAge: '30d',
+      },
+    );
+  });
+
+  app.get<{
+    Params: { episodeId: string };
   }>('/streams/episode/:episodeId/thumbnail.jpg', async (req, reply) => {
     const database = getDatabase();
 

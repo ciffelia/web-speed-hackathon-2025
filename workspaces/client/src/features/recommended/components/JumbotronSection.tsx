@@ -1,24 +1,18 @@
 import type { StandardSchemaV1 } from '@standard-schema/spec';
 import type * as schema from '@wsh-2025/schema/src/api/schema';
-import { useRef } from 'react';
 import { Flipped } from 'react-flip-toolkit';
 import { NavLink } from 'react-router';
 import invariant from 'tiny-invariant';
 import type { ArrayValues } from 'type-fest';
 
-import { Player } from '../../player/components/Player';
-import { PlayerType } from '../../player/constants/player_type';
-import type { PlayerWrapper } from '../../player/interfaces/player_wrapper';
-
 import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
 
 interface Props {
+  loading?: 'lazy' | 'eager';
   module: ArrayValues<StandardSchemaV1.InferOutput<typeof schema.getRecommendedModulesResponse>>;
 }
 
-export const JumbotronSection = ({ module }: Props) => {
-  const playerRef = useRef<PlayerWrapper>(null);
-
+export const JumbotronSection = ({ loading = 'lazy', module }: Props) => {
   const episode = module.items[0]?.episode;
   invariant(episode);
 
@@ -42,12 +36,17 @@ export const JumbotronSection = ({ module }: Props) => {
 
             <Flipped stagger flipId={isTransitioning ? `episode-${episode.id}` : 0}>
               <div className="h-full w-auto shrink-0 grow-0">
-                <Player
+                <video
+                  autoPlay
+                  disablePictureInPicture
+                  disableRemotePlayback
                   loop
+                  muted
+                  playsInline
                   className="size-full"
-                  playerRef={playerRef}
-                  playerType={PlayerType.ShakaPlayer}
-                  playlistUrl={`/streams/episode/${episode.id}/playlist.m3u8`}
+                  controls={false}
+                  preload={loading === 'eager' ? 'auto' : 'none'}
+                  src={`/streams/episode/${episode.id}/video-small.mp4`}
                 />
               </div>
             </Flipped>
