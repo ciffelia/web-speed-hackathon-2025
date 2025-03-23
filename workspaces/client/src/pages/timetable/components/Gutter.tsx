@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react';
+import type { ReactElement } from 'react';
+import React from 'react';
 
 import { useChangeColumnWidth } from '@wsh-2025/client/src/pages/timetable/hooks/useChangeColumnWidth';
 

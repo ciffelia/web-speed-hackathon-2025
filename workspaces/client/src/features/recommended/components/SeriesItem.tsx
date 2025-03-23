@@ -1,6 +1,7 @@
-import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
 import { Flipped } from 'react-flip-toolkit';
 import { NavLink } from 'react-router';
+
+import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
 
 interface Props {
   series: {

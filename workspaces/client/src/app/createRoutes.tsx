@@ -1,7 +1,7 @@
-import { RouteObject } from 'react-router';
+import type { RouteObject } from 'react-router';
 
 import { Document, prefetch } from '@wsh-2025/client/src/app/Document';
-import { createStore } from '@wsh-2025/client/src/app/createStore';
+import type { createStore } from '@wsh-2025/client/src/app/createStore';
 
 export function createRoutes(store: ReturnType<typeof createStore>): RouteObject[] {
   return [

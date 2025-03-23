@@ -1,4 +1,4 @@
-import { IconifyJSON } from '@iconify/types';
+import type { IconifyJSON } from '@iconify/types';
 import { defineConfig, presetIcons, presetWind3 } from 'unocss';
 
 export default defineConfig({

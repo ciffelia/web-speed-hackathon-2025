@@ -1,5 +1,5 @@
-import { StandardSchemaV1 } from '@standard-schema/spec';
-import * as schema from '@wsh-2025/schema/src/api/schema';
+import type { StandardSchemaV1 } from '@standard-schema/spec';
+import type * as schema from '@wsh-2025/schema/src/api/schema';
 
 interface Params {
   episode: StandardSchemaV1.InferOutput<typeof schema.getEpisodeByIdResponse>;

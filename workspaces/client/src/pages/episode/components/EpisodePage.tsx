@@ -1,12 +1,13 @@
 import { Suspense } from 'react';
-import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
 import { Flipped } from 'react-flip-toolkit';
-import { Params, useLoaderData, useParams } from 'react-router';
+import type { Params } from 'react-router';
+import { useLoaderData, useParams } from 'react-router';
 import invariant from 'tiny-invariant';
 
-import { createStore } from '@wsh-2025/client/src/app/createStore';
+import type { createStore } from '@wsh-2025/client/src/app/createStore';
 import { useAuthActions } from '@wsh-2025/client/src/features/auth/hooks/useAuthActions';
 import { useAuthUser } from '@wsh-2025/client/src/features/auth/hooks/useAuthUser';
+import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
 import { Player } from '@wsh-2025/client/src/features/player/components/Player';
 import { PlayerType } from '@wsh-2025/client/src/features/player/constants/player_type';
 import { RecommendedSection } from '@wsh-2025/client/src/features/recommended/components/RecommendedSection';

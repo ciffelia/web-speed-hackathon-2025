@@ -2,7 +2,7 @@ import { DateTime } from 'luxon';
 import { useLoaderData } from 'react-router';
 import invariant from 'tiny-invariant';
 
-import { createStore } from '@wsh-2025/client/src/app/createStore';
+import type { createStore } from '@wsh-2025/client/src/app/createStore';
 import { ChannelTitle } from '@wsh-2025/client/src/pages/timetable/components/ChannelTitle';
 import { NewTimetableFeatureDialog } from '@wsh-2025/client/src/pages/timetable/components/NewTimetableFeatureDialog';
 import { ProgramList } from '@wsh-2025/client/src/pages/timetable/components/ProgramList';

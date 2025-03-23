@@ -1,5 +1,6 @@
 import classNames from 'classnames';
-import { ReactNode, useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 import { Flipper } from 'react-flip-toolkit';
 import { Link, useLocation, useNavigation } from 'react-router';
 

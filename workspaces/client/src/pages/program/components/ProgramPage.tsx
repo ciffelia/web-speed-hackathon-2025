@@ -1,11 +1,12 @@
 import { DateTime } from 'luxon';
 import { useEffect, useRef } from 'react';
 import { Flipped } from 'react-flip-toolkit';
-import { Link, Params, useLoaderData, useNavigate, useParams } from 'react-router';
+import type { Params } from 'react-router';
+import { Link, useLoaderData, useNavigate, useParams } from 'react-router';
 import { useUpdate } from 'react-use';
 import invariant from 'tiny-invariant';
 
-import { createStore } from '@wsh-2025/client/src/app/createStore';
+import type { createStore } from '@wsh-2025/client/src/app/createStore';
 import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
 import { Player } from '@wsh-2025/client/src/features/player/components/Player';
 import { PlayerType } from '@wsh-2025/client/src/features/player/constants/player_type';

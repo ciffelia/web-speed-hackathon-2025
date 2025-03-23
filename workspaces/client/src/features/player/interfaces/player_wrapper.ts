@@ -1,4 +1,4 @@
-import { PlayerType } from '@wsh-2025/client/src/features/player/constants/player_type';
+import type { PlayerType } from '@wsh-2025/client/src/features/player/constants/player_type';
 
 export interface PlayerWrapper {
   readonly currentTime: number;
