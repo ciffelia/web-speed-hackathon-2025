@@ -2,7 +2,7 @@ import { DateTime } from 'luxon';
 import { useEffect, useRef } from 'react';
 import { Flipped } from 'react-flip-toolkit';
 import type { Params } from 'react-router';
-import { Link, useLoaderData, useNavigate, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import { useUpdate } from 'react-use';
 import invariant from 'tiny-invariant';
 
@@ -10,8 +10,11 @@ import type { createStore } from '@wsh-2025/client/src/app/createStore';
 import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
 import { Player } from '@wsh-2025/client/src/features/player/components/Player';
 import { PlayerType } from '@wsh-2025/client/src/features/player/constants/player_type';
+import { useProgramById } from '@wsh-2025/client/src/features/program/hooks/useProgramById';
 import { RecommendedSection } from '@wsh-2025/client/src/features/recommended/components/RecommendedSection';
+import { useRecommended } from '@wsh-2025/client/src/features/recommended/hooks/useRecommended';
 import { SeriesEpisodeList } from '@wsh-2025/client/src/features/series/components/SeriesEpisodeList';
+import { useTimetable } from '@wsh-2025/client/src/features/timetable/hooks/useTimetable';
 import { PlayerController } from '@wsh-2025/client/src/pages/program/components/PlayerController';
 import { usePlayerRef } from '@wsh-2025/client/src/pages/program/hooks/usePlayerRef';
 
@@ -35,12 +38,15 @@ export const ProgramPage = () => {
   const { programId } = useParams();
   invariant(programId);
 
-  const { modules, program, timetable } = useLoaderData<typeof prefetch>();
+  const program = useProgramById({ programId });
   invariant(program);
 
-  const nextProgram = timetable.find((p) => {
-    return program.channel.id === p.channelId && DateTime.fromISO(program.endAt).equals(DateTime.fromISO(p.startAt));
+  const timetable = useTimetable();
+  const nextProgram = timetable[program.channel.id]?.find((p) => {
+    return DateTime.fromISO(program.endAt).equals(DateTime.fromISO(p.startAt));
   });
+
+  const modules = useRecommended({ referenceId: programId });
 
   const playerRef = usePlayerRef();
 

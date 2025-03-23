@@ -1,15 +1,17 @@
 import { Suspense } from 'react';
 import { Flipped } from 'react-flip-toolkit';
 import type { Params } from 'react-router';
-import { useLoaderData, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import invariant from 'tiny-invariant';
 
 import type { createStore } from '@wsh-2025/client/src/app/createStore';
 import { useAuthActions } from '@wsh-2025/client/src/features/auth/hooks/useAuthActions';
 import { useAuthUser } from '@wsh-2025/client/src/features/auth/hooks/useAuthUser';
+import { useEpisodeById } from '@wsh-2025/client/src/features/episode/hooks/useEpisodeById';
 import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
 import { NativePlayer } from '@wsh-2025/client/src/features/player/components/NativePlayer';
 import { RecommendedSection } from '@wsh-2025/client/src/features/recommended/components/RecommendedSection';
+import { useRecommended } from '@wsh-2025/client/src/features/recommended/hooks/useRecommended';
 import { SeriesEpisodeList } from '@wsh-2025/client/src/features/series/components/SeriesEpisodeList';
 import { PlayerController } from '@wsh-2025/client/src/pages/episode/components/PlayerController';
 import { usePlayerRef } from '@wsh-2025/client/src/pages/episode/hooks/usePlayerRef';
@@ -30,8 +32,10 @@ export const EpisodePage = () => {
   const { episodeId } = useParams();
   invariant(episodeId);
 
-  const { episode, modules } = useLoaderData<typeof prefetch>();
+  const episode = useEpisodeById({ episodeId });
   invariant(episode);
+
+  const modules = useRecommended({ referenceId: episodeId });
 
   const playerRef = usePlayerRef();
 

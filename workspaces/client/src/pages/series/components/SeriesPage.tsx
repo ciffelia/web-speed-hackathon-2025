@@ -1,12 +1,14 @@
 import { Flipped } from 'react-flip-toolkit';
 import type { Params } from 'react-router';
-import { useLoaderData, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import invariant from 'tiny-invariant';
 
 import type { createStore } from '@wsh-2025/client/src/app/createStore';
 import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
 import { RecommendedSection } from '@wsh-2025/client/src/features/recommended/components/RecommendedSection';
+import { useRecommended } from '@wsh-2025/client/src/features/recommended/hooks/useRecommended';
 import { SeriesEpisodeList } from '@wsh-2025/client/src/features/series/components/SeriesEpisodeList';
+import { useSeriesById } from '@wsh-2025/client/src/features/series/hooks/useSeriesById';
 
 export const prefetch = async (store: ReturnType<typeof createStore>, { seriesId }: Params) => {
   invariant(seriesId);
@@ -21,8 +23,10 @@ export const SeriesPage = () => {
   const { seriesId } = useParams();
   invariant(seriesId);
 
-  const { modules, series } = useLoaderData<typeof prefetch>();
+  const series = useSeriesById({ seriesId });
   invariant(series);
+
+  const modules = useRecommended({ referenceId: seriesId });
 
   return (
     <>
