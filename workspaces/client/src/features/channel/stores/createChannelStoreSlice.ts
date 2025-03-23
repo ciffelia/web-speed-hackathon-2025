@@ -9,6 +9,7 @@ type ChannelId = string;
 
 interface ChannelState {
   channels: Record<ChannelId, StandardSchemaV1.InferOutput<typeof schema.getChannelByIdResponse>>;
+  channelsAllFetched: boolean;
 }
 
 interface ChannelActions {
@@ -19,9 +20,15 @@ interface ChannelActions {
 }
 
 export const createChannelStoreSlice = () => {
-  return lens<ChannelState & ChannelActions>((set) => ({
+  return lens<ChannelState & ChannelActions>((set, get) => ({
     channels: {},
+    channelsAllFetched: false,
     fetchChannelById: async ({ channelId }) => {
+      const subState = get();
+      if (subState.channels[channelId]) {
+        return subState.channels[channelId];
+      }
+
       const channel = await channelService.fetchChannelById({ channelId });
       set((state) => {
         return produce(state, (draft) => {
@@ -31,12 +38,18 @@ export const createChannelStoreSlice = () => {
       return channel;
     },
     fetchChannels: async () => {
+      const subState = get();
+      if (subState.channelsAllFetched) {
+        return Object.values(subState.channels);
+      }
+
       const channels = await channelService.fetchChannels();
       set((state) => {
         return produce(state, (draft) => {
           for (const channel of channels) {
             draft.channels[channel.id] = channel;
           }
+          draft.channelsAllFetched = true;
         });
       });
       return channels;

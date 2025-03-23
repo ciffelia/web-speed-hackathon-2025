@@ -27,12 +27,17 @@ interface AuthActions {
 }
 
 export const createAuthStoreSlice = () => {
-  return lens<AuthState & AuthActions>((set) => ({
+  return lens<AuthState & AuthActions>((set, get) => ({
     closeDialog: () => {
       set({ dialog: null });
     },
     dialog: null,
     fetchUser: async () => {
+      const subState = get();
+      if (subState.user) {
+        return subState.user;
+      }
+
       try {
         const user = await authService.fetchUser();
         set({ user });

@@ -9,6 +9,7 @@ type EpisodeId = string;
 
 interface EpisodeState {
   episodes: Record<EpisodeId, StandardSchemaV1.InferOutput<typeof schema.getEpisodeByIdResponse>>;
+  episodesAllFetched: boolean;
 }
 
 interface EpisodeActions {
@@ -19,9 +20,15 @@ interface EpisodeActions {
 }
 
 export const createEpisodeStoreSlice = () => {
-  return lens<EpisodeState & EpisodeActions>((set) => ({
+  return lens<EpisodeState & EpisodeActions>((set, get) => ({
     episodes: {},
+    episodesAllFetched: false,
     fetchEpisodeById: async ({ episodeId }) => {
+      const subState = get();
+      if (subState.episodes[episodeId]) {
+        return subState.episodes[episodeId];
+      }
+
       const episode = await episodeService.fetchEpisodeById({ episodeId });
       set((state) => {
         return produce(state, (draft) => {
@@ -31,12 +38,18 @@ export const createEpisodeStoreSlice = () => {
       return episode;
     },
     fetchEpisodes: async () => {
+      const subState = get();
+      if (subState.episodesAllFetched) {
+        return Object.values(subState.episodes);
+      }
+
       const episodes = await episodeService.fetchEpisodes();
       set((state) => {
         return produce(state, (draft) => {
           for (const episode of episodes) {
             draft.episodes[episode.id] = episode;
           }
+          draft.episodesAllFetched = true;
         });
       });
       return episodes;

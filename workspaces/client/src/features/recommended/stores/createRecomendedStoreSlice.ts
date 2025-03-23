@@ -24,8 +24,14 @@ interface RecommendedActions {
 }
 
 export const createRecommendedStoreSlice = () => {
-  return lens<RecommendedState & RecommendedActions>((set) => ({
+  return lens<RecommendedState & RecommendedActions>((set, get) => ({
     fetchRecommendedModulesByReferenceId: async ({ referenceId }) => {
+      const subState = get();
+      if (subState.references[referenceId]) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return subState.references[referenceId].map((id) => subState.recommendedModules[id]!);
+      }
+
       const modules = await recommendedService.fetchRecommendedModulesByReferenceId({ referenceId });
       set((state) => {
         return produce(state, (draft) => {

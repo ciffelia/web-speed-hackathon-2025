@@ -10,6 +10,7 @@ type ProgramId = string;
 
 interface TimetableState {
   programs: Record<ProgramId, ArrayValues<StandardSchemaV1.InferOutput<typeof schema.getTimetableResponse>>>;
+  programsByRange: Record<string, ArrayValues<StandardSchemaV1.InferOutput<typeof schema.getTimetableResponse>>[]>;
 }
 
 interface TimetableActions {
@@ -20,8 +21,14 @@ interface TimetableActions {
 }
 
 export const createTimetableStoreSlice = () => {
-  return lens<TimetableState & TimetableActions>((set) => ({
+  return lens<TimetableState & TimetableActions>((set, get) => ({
     fetchTimetable: async ({ since, until }) => {
+      const subState = get();
+      const range = `${since}-${until}`;
+      if (subState.programsByRange[range]) {
+        return subState.programsByRange[range];
+      }
+
       const programs = await timetableService.fetchTimetable({ since, until });
       set((state) => {
         return produce(state, (draft) => {
@@ -29,10 +36,12 @@ export const createTimetableStoreSlice = () => {
           for (const program of programs) {
             draft.programs[program.id] = program;
           }
+          draft.programsByRange[range] = programs;
         });
       });
       return programs;
     },
     programs: {},
+    programsByRange: {},
   }));
 };
