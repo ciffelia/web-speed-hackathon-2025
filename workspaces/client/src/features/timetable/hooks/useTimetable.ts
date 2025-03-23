@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { ArrayValues } from 'type-fest';
 
 import { useStore } from '@wsh-2025/client/src/app/StoreContext';
@@ -22,7 +23,7 @@ export function useTimetable() {
     }
 
     record[channel.id] = filteredPrograms.sort((a, b) => {
-      return a.startAtUnix - b.startAtUnix;
+      return DateTime.fromISO(a.startAt).toMillis() - DateTime.fromISO(b.startAt).toMillis();
     });
   }
 

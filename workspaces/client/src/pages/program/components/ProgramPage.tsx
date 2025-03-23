@@ -1,5 +1,5 @@
-import { addHours, startOfDay } from 'date-fns';
-import { useEffect, useMemo, useRef } from 'react';
+import { DateTime } from 'luxon';
+import { useEffect, useRef } from 'react';
 import { Flipped } from 'react-flip-toolkit';
 import { Link, Params, useLoaderData, useNavigate, useParams } from 'react-router';
 import { useUpdate } from 'react-use';
@@ -17,9 +17,9 @@ import { usePlayerRef } from '@wsh-2025/client/src/pages/program/hooks/usePlayer
 export const prefetch = async (store: ReturnType<typeof createStore>, { programId }: Params) => {
   invariant(programId);
 
-  const now = new Date();
-  const since = addHours(startOfDay(addHours(now, 9)), -9).toISOString();
-  const until = addHours(since, 24).toISOString();
+  const now = DateTime.now();
+  const since = now.startOf('day').toISO();
+  const until = now.endOf('day').toISO();
 
   const program = await store.getState().features.program.fetchProgramById({ programId });
   const channels = await store.getState().features.channel.fetchChannels();
@@ -38,15 +38,15 @@ export const ProgramPage = () => {
   invariant(program);
 
   const nextProgram = timetable.find((p) => {
-    return program.channel.id === p.channelId && program.endAtUnix === p.endAtUnix;
+    return program.channel.id === p.channelId && DateTime.fromISO(program.endAt).equals(DateTime.fromISO(p.startAt));
   });
 
   const playerRef = usePlayerRef();
 
   const forceUpdate = useUpdate();
   const navigate = useNavigate();
-  const isArchivedRef = useRef(program.endAtUnix <= Date.now());
-  const isBroadcastStarted = program.startAtUnix <= Date.now();
+  const isArchivedRef = useRef(DateTime.fromISO(program.endAt) <= DateTime.now());
+  const isBroadcastStarted = DateTime.fromISO(program.startAt) <= DateTime.now();
   useEffect(() => {
     if (isArchivedRef.current) {
       return;
@@ -65,7 +65,7 @@ export const ProgramPage = () => {
 
     // 放送中に次の番組が始まったら、画面をそのままにしつつ、情報を次の番組にする
     let timeout = setTimeout(function tick() {
-      if (Date.now() < program.endAtUnix) {
+      if (DateTime.now() < DateTime.fromISO(program.endAt)) {
         timeout = setTimeout(tick, 250);
         return;
       }
@@ -85,14 +85,6 @@ export const ProgramPage = () => {
       clearTimeout(timeout);
     };
   }, [isBroadcastStarted, nextProgram?.id]);
-
-  const formattedStartAt = useMemo(() => {
-    return formatDate(new Date(program.startAtUnix));
-  }, [program.startAtUnix]);
-
-  const formattedEndAt = useMemo(() => {
-    return formatDate(new Date(program.endAtUnix));
-  }, [program.endAtUnix]);
 
   return (
     <>
@@ -145,7 +137,7 @@ export const ProgramPage = () => {
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#00000077] p-[24px]">
                   <p className="mb-[32px] text-[24px] font-bold text-[#ffffff]">
-                    この番組は {formattedStartAt} に放送予定です
+                    この番組は {DateTime.fromISO(program.startAt).toFormat('L月d日 H:mm')} に放送予定です
                   </p>
                 </div>
               </div>
@@ -161,9 +153,9 @@ export const ProgramPage = () => {
             <Ellipsis lines={2}>{program.title}</Ellipsis>
           </h1>
           <div className="mt-[8px] text-[16px] text-[#999999]">
-            {formattedStartAt}
+            {DateTime.fromISO(program.startAt).toFormat('L月d日 H:mm')}
             {' 〜 '}
-            {formattedEndAt}
+            {DateTime.fromISO(program.endAt).toFormat('L月d日 H:mm')}
           </div>
           <div className="mt-[16px] text-[16px] text-[#999999]">
             <Ellipsis lines={3}>{program.description}</Ellipsis>
@@ -183,8 +175,4 @@ export const ProgramPage = () => {
       </div>
     </>
   );
-};
-
-const formatDate = (date: Date) => {
-  return `${date.getMonth() + 1}月${date.getDate()}日 ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
 };
