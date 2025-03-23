@@ -1,8 +1,6 @@
-import { DateTime } from 'luxon';
 import type { ArrayValues } from 'type-fest';
 
 import { useStore } from '@wsh-2025/client/src/app/StoreContext';
-import { parseIso } from '@wsh-2025/client/src/parseCache';
 
 type ChannelId = string;
 
@@ -28,3 +26,15 @@ export function useTimetable() {
 
   return record;
 }
+
+const cache = new Map<string, number>();
+
+export const parseIso = (iso: string): number => {
+  if (cache.has(iso)) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return cache.get(iso)!;
+  }
+  const parsed = DateTime.fromISO(iso).toMillis();
+  cache.set(iso, parsed);
+  return parsed;
+};

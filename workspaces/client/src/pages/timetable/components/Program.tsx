@@ -3,7 +3,7 @@ import type * as schema from '@wsh-2025/schema/src/api/schema';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 import type { ReactElement } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ArrayValues } from 'type-fest';
 
 import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
@@ -11,7 +11,6 @@ import { ProgramDetailDialog } from '@wsh-2025/client/src/pages/timetable/compon
 import { useColumnWidth } from '@wsh-2025/client/src/pages/timetable/hooks/useColumnWidth';
 import { useCurrentUnixtimeMs } from '@wsh-2025/client/src/pages/timetable/hooks/useCurrentUnixtimeMs';
 import { useSelectedProgramId } from '@wsh-2025/client/src/pages/timetable/hooks/useSelectedProgramId';
-import { parseIso } from '@wsh-2025/client/src/parseCache';
 
 interface Props {
   height: number;
@@ -27,9 +26,15 @@ export const Program = ({ height, program }: Props): ReactElement => {
     setProgram(program);
   };
 
+  const [startAt, endAt] = useMemo(() => {
+    const startAt = DateTime.fromISO(program.startAt);
+    const endAt = DateTime.fromISO(program.endAt);
+    return [startAt, endAt];
+  }, [program.startAt, program.endAt]);
+
   const currentUnixtimeMs = useCurrentUnixtimeMs();
-  const isBroadcasting = parseIso(program.startAt) <= currentUnixtimeMs && currentUnixtimeMs < parseIso(program.endAt);
-  const isArchived = parseIso(program.endAt) <= currentUnixtimeMs;
+  const isBroadcasting = startAt.toMillis() <= currentUnixtimeMs && currentUnixtimeMs < endAt.toMillis();
+  const isArchived = endAt.toMillis() <= currentUnixtimeMs;
 
   const titleRef = useRef<HTMLDivElement | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
@@ -70,7 +75,7 @@ export const Program = ({ height, program }: Props): ReactElement => {
                 color: isBroadcasting ? '#767676' : '#999999',
               }}
             >
-              {DateTime.fromISO(program.startAt).toFormat('mm')}
+              {startAt.toFormat('mm')}
             </span>
             <div
               className={`grow-1 shrink-1 overflow-hidden text-[14px] font-bold`}
