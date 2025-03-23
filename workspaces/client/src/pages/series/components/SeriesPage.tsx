@@ -10,10 +10,15 @@ import { SeriesEpisodeList } from '@wsh-2025/client/src/features/series/componen
 
 export const prefetch = async (store: ReturnType<typeof createStore>, { seriesId }: Params) => {
   invariant(seriesId);
-  const series = await store.getState().features.series.fetchSeriesById({ seriesId });
-  const modules = await store
-    .getState()
-    .features.recommended.fetchRecommendedModulesByReferenceId({ referenceId: seriesId });
+
+  const state = store.getState();
+  const series = state.features.series.series[seriesId] ?? (await state.features.series.fetchSeriesById({ seriesId }));
+  const modules =
+    store.getState().features.recommended.references[
+      seriesId
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    ]?.map((moduleId) => state.features.recommended.recommendedModules[moduleId]!) ??
+    (await state.features.recommended.fetchRecommendedModulesByReferenceId({ referenceId: seriesId }));
   return { modules, series };
 };
 
@@ -56,7 +61,7 @@ export const SeriesPage = () => {
 
         {modules[0] != null ? (
           <div>
-            <RecommendedSection module={modules[0]} loading="eager" />
+            <RecommendedSection loading="eager" module={modules[0]} />
           </div>
         ) : null}
       </div>
