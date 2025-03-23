@@ -136,7 +136,7 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           git add -N .
-          git diff --diff-filter=d --name-only -z | tar cf changed-files.tar --null --files-from=-
+          git diff --diff-filter=d --name-only -z | tar cvf changed-files.tar --null --files-from=-
 
       - name: Upload changed files archive
         if: ${{ !cancelled() }}
