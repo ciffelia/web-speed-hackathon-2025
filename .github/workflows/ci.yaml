@@ -93,7 +93,7 @@ jobs:
         shardIndex: [1, 2, 3]
         shardTotal: [3]
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
@@ -114,7 +114,7 @@ jobs:
 
       - run: bash -c 'pnpm run start &> server.log' &
 
-      - run: pnpm --filter "@wsh-2025/test" exec playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+      - run: timeout 10m pnpm --filter "@wsh-2025/test" exec playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
         env:
           FORCE_COLOR: true
           ACTIONS_RUN_CREATED_AT: ${{ needs.metadata.outputs.created-at }}
