@@ -5,10 +5,7 @@ type PlayerWrapperConstructor = new () => PlayerWrapper;
 
 export const loadPlayer = async (playerType: PlayerType): Promise<PlayerWrapperConstructor> => {
   switch (playerType) {
-    case PlayerType.HlsJS: {
-      const { HlsJSPlayerWrapper } = await import('@wsh-2025/client/src/features/player/logics/HlsJSPlayerWrapper');
-      return HlsJSPlayerWrapper;
-    }
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     case PlayerType.VideoJS: {
       const { VideoJSPlayerWrapper } = await import('@wsh-2025/client/src/features/player/logics/VideoJSPlayerWrapper');
       return VideoJSPlayerWrapper;

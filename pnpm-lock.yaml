@@ -166,9 +166,6 @@ importers:
       css-loader:
         specifier: 7.1.2
         version: 7.1.2(@rspack/core@1.2.8(@swc/helpers@0.5.15))
-      hls.js:
-        specifier: 1.5.17
-        version: 1.5.17
       swc-loader:
         specifier: 0.2.6
         version: 0.2.6(@swc/core@1.11.11(@swc/helpers@0.5.15))
@@ -3990,9 +3987,6 @@ packages:
     resolution: {integrity: sha512-DucBFr50xtcxcMCfmwsbW46qlUl4mwwZ5405th4GJfaiI4D+BCc9Ykj0/SDr00ZBKNXrym8jopOdM4dQNSWyNw==}
     engines: {node: ~20.x}
     hasBin: true
-
-  hls.js@1.5.17:
-    resolution: {integrity: sha512-wA66nnYFvQa1o4DO/BFgLNRKnBTVXpNeldGRBJ2Y0SvFtdwvFKCbqa9zhHoZLoxHhZ+jYsj3aIBkWQQCPNOhMw==}
 
   hpack.js@2.1.6:
     resolution: {integrity: sha512-zJxVehUdMGIKsRaNt7apO2Gqp0BdqW5yaiGHXXmbpvxgBYVZnAql+BJb4RO5ad2MgpbZKn5G6nMnegrH1FcNYQ==}
@@ -10740,8 +10734,6 @@ snapshots:
       - supports-color
       - typescript
       - utf-8-validate
-
-  hls.js@1.5.17: {}
 
   hpack.js@2.1.6:
     dependencies:

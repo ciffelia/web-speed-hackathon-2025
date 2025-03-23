@@ -8,8 +8,7 @@ import type { createStore } from '@wsh-2025/client/src/app/createStore';
 import { useAuthActions } from '@wsh-2025/client/src/features/auth/hooks/useAuthActions';
 import { useAuthUser } from '@wsh-2025/client/src/features/auth/hooks/useAuthUser';
 import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
-import { Player } from '@wsh-2025/client/src/features/player/components/Player';
-import { PlayerType } from '@wsh-2025/client/src/features/player/constants/player_type';
+import { NativePlayer } from '@wsh-2025/client/src/features/player/components/NativePlayer';
 import { RecommendedSection } from '@wsh-2025/client/src/features/recommended/components/RecommendedSection';
 import { SeriesEpisodeList } from '@wsh-2025/client/src/features/series/components/SeriesEpisodeList';
 import { PlayerController } from '@wsh-2025/client/src/pages/episode/components/PlayerController';
@@ -87,11 +86,10 @@ export const EpisodePage = () => {
                 }
               >
                 <div className="relative size-full">
-                  <Player
+                  <NativePlayer
                     className="size-full"
                     playerRef={playerRef}
-                    playerType={PlayerType.HlsJS}
-                    playlistUrl={`/streams/episode/${episode.id}/playlist.m3u8`}
+                    videoUrl={`/streams/episode/${episode.id}/video-small.mp4`}
                   />
 
                   <div className="absolute inset-x-0 bottom-0">
