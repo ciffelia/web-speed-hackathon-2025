@@ -63,6 +63,8 @@ const configs = [
           allowNumber: true,
         },
       ],
+      '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/no-import-type-side-effects': 'error',
       eqeqeq: ['error', 'always', { null: 'never' }],
       'import/no-named-as-default': ['off'],
       'import/no-named-as-default-member': ['off'],
