@@ -1,5 +1,6 @@
 import type { StandardSchemaV1 } from '@standard-schema/spec';
 import type * as schema from '@wsh-2025/schema/src/api/schema';
+import { useEffect, useRef, useState } from 'react';
 import { Flipped } from 'react-flip-toolkit';
 import { NavLink } from 'react-router';
 import invariant from 'tiny-invariant';
@@ -15,6 +16,27 @@ interface Props {
 export const JumbotronSection = ({ loading = 'lazy', module }: Props) => {
   const episode = module.items[0]?.episode;
   invariant(episode);
+
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          // eslint-disable-next-line @typescript-eslint/no-floating-promises
+          ref.current?.play();
+        }
+      }
+    });
+
+    observer.observe(ref.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   return (
     <NavLink
@@ -37,12 +59,13 @@ export const JumbotronSection = ({ loading = 'lazy', module }: Props) => {
             <Flipped stagger flipId={isTransitioning ? `episode-${episode.id}` : 0}>
               <div className="h-full w-auto shrink-0 grow-0">
                 <video
-                  autoPlay
+                  ref={ref}
                   disablePictureInPicture
                   disableRemotePlayback
                   loop
                   muted
                   playsInline
+                  autoPlay={loading === 'eager'}
                   className="size-full"
                   controls={false}
                   preload={loading === 'eager' ? 'auto' : 'none'}
