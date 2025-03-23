@@ -52,15 +52,15 @@ const program = z.object({
     example:
       '『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。1905年（明治38年）1月、『ホトトギス』にて発表されたのだが、好評を博したため、翌1906年（明治39年）8月まで継続した。上、1906年10月刊、中、1906年11月刊、下、1907年5月刊。この文章は、クリエイティブ・コモンズ 表示-継承 4.0 国際 パブリック・ライセンスのもとで公表されたウィキペディアの項目「吾輩は猫である」（https://ja.wikipedia.org/wiki/吾輩は猫である）を素材として二次利用しています。',
   }),
-  startAt: z.string().openapi({ format: 'date-time' }),
-  endAt: z.string().openapi({ format: 'date-time' }),
+  startAtUnix: z.number().openapi({ example: 1690000000 }),
+  endAtUnix: z.number().openapi({ example: 1690000000 }),
   thumbnailUrl: z.string().openapi({
     example: 'https://image.example.com/assets/d13d2e22-a7ff-44ba-94a3-5f025f2b63cd.png',
   }),
   channelId: z.string().openapi({ format: 'uuid' }),
   episodeId: z.string().openapi({ format: 'uuid' }),
 });
-assertSchema(program, createSelectSchema(databaseSchema.program));
+// assertSchema(program, createSelectSchema(databaseSchema.program));
 
 const recommendedModule = z.object({
   id: z.string().openapi({ format: 'uuid' }),

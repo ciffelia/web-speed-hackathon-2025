@@ -335,7 +335,7 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
     handler: async function getTimetable(req, reply) {
       const database = getDatabase();
 
-      const programs = await database.query.program.findMany({
+      const rawPrograms = await database.query.program.findMany({
         orderBy(program, { asc }) {
           return asc(program.startAt);
         },
@@ -347,6 +347,13 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
             sql`time(${req.query.until}, '+9 hours')`,
           );
         },
+      });
+      const programs = rawPrograms.map(({ endAt, startAt, ...program }) => {
+        return {
+          ...program,
+          startAtUnix: Date.parse(startAt),
+          endAtUnix: Date.parse(endAt),
+        };
       });
       reply.code(200).header('cache-control', 'public, max-age=2592000, immutable').send(programs);
     },
@@ -371,7 +378,7 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
     handler: async function getPrograms(req, reply) {
       const database = getDatabase();
 
-      const programs = await database.query.program.findMany({
+      const rawPrograms = await database.query.program.findMany({
         orderBy(program, { asc }) {
           return asc(program.startAt);
         },
@@ -399,6 +406,13 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
           },
         },
       });
+      const programs = rawPrograms.map(({ endAt, startAt, ...program }) => {
+        return {
+          ...program,
+          startAtUnix: Date.parse(startAt),
+          endAtUnix: Date.parse(endAt),
+        };
+      });
       reply.code(200).header('cache-control', 'public, max-age=2592000, immutable').send(programs);
     },
   });
@@ -422,7 +436,7 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
     handler: async function getProgramById(req, reply) {
       const database = getDatabase();
 
-      const program = await database.query.program.findFirst({
+      const rawProgram = await database.query.program.findFirst({
         where(program, { eq }) {
           return eq(program.id, req.params.programId);
         },
@@ -443,9 +457,14 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
           },
         },
       });
-      if (program == null) {
+      if (rawProgram == null) {
         return reply.code(404).send();
       }
+      const program = {
+        ...rawProgram,
+        startAtUnix: Date.parse(rawProgram.startAt),
+        endAtUnix: Date.parse(rawProgram.endAt),
+      };
       reply.code(200).header('cache-control', 'public, max-age=2592000, immutable').send(program);
     },
   });

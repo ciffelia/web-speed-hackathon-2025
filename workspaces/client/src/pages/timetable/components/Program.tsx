@@ -1,11 +1,10 @@
 import { StandardSchemaV1 } from '@standard-schema/spec';
 import * as schema from '@wsh-2025/schema/src/api/schema';
 import classNames from 'classnames';
-import { DateTime } from 'luxon';
 import { ReactElement, useEffect, useRef, useState } from 'react';
-import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
 import { ArrayValues } from 'type-fest';
 
+import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
 import { ProgramDetailDialog } from '@wsh-2025/client/src/pages/timetable/components/ProgramDetailDialog';
 import { useColumnWidth } from '@wsh-2025/client/src/pages/timetable/hooks/useColumnWidth';
 import { useCurrentUnixtimeMs } from '@wsh-2025/client/src/pages/timetable/hooks/useCurrentUnixtimeMs';
@@ -26,10 +25,8 @@ export const Program = ({ height, program }: Props): ReactElement => {
   };
 
   const currentUnixtimeMs = useCurrentUnixtimeMs();
-  const isBroadcasting =
-    DateTime.fromISO(program.startAt).toMillis() <= DateTime.fromMillis(currentUnixtimeMs).toMillis() &&
-    DateTime.fromMillis(currentUnixtimeMs).toMillis() < DateTime.fromISO(program.endAt).toMillis();
-  const isArchived = DateTime.fromISO(program.endAt).toMillis() <= DateTime.fromMillis(currentUnixtimeMs).toMillis();
+  const isBroadcasting = program.startAtUnix <= currentUnixtimeMs && currentUnixtimeMs < program.endAtUnix;
+  const isArchived = program.endAtUnix <= currentUnixtimeMs;
 
   const titleRef = useRef<HTMLDivElement | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
@@ -70,7 +67,7 @@ export const Program = ({ height, program }: Props): ReactElement => {
                 color: isBroadcasting ? '#767676' : '#999999',
               }}
             >
-              {DateTime.fromISO(program.startAt).toFormat('mm')}
+              {new Date(program.startAtUnix).getMinutes().toString().padStart(2, '0')}
             </span>
             <div
               className={`grow-1 shrink-1 overflow-hidden text-[14px] font-bold`}

@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon';
+import { addHours, startOfDay } from 'date-fns';
 import { useLoaderData } from 'react-router';
 import invariant from 'tiny-invariant';
 
@@ -10,9 +10,9 @@ import { TimelineYAxis } from '@wsh-2025/client/src/pages/timetable/components/T
 import { useShownNewFeatureDialog } from '@wsh-2025/client/src/pages/timetable/hooks/useShownNewFeatureDialog';
 
 export const prefetch = async (store: ReturnType<typeof createStore>) => {
-  const now = DateTime.now();
-  const since = now.startOf('day').toISO();
-  const until = now.endOf('day').toISO();
+  const now = new Date();
+  const since = addHours(startOfDay(addHours(now, 9)), -9).toISOString();
+  const until = addHours(since, 24).toISOString();
 
   const channels = await store.getState().features.channel.fetchChannels();
   const programs = await store.getState().features.timetable.fetchTimetable({ since, until });
@@ -32,7 +32,7 @@ export const TimetablePage = () => {
       }
     }
     return filteredPrograms.sort((a, b) => {
-      return DateTime.fromISO(a.startAt).toMillis() - DateTime.fromISO(b.startAt).toMillis();
+      return a.startAtUnix - b.startAtUnix;
     });
   });
 
