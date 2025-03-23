@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import { Flipper } from 'react-flip-toolkit';
 import { Link, useLocation, useNavigation } from 'react-router';
 
-import { useHydrationCompleted } from '../hooks/useHydrationCompleted';
-
 import { SignInDialog } from '@wsh-2025/client/src/features/auth/components/SignInDialog';
 import { SignOutDialog } from '@wsh-2025/client/src/features/auth/components/SignOutDialog';
 import { SignUpDialog } from '@wsh-2025/client/src/features/auth/components/SignUpDialog';
@@ -78,7 +76,6 @@ export const Layout = ({ children }: Props) => {
           <nav>
             <button
               className="block flex h-[56px] w-[188px] items-center justify-center bg-transparent pb-[8px] pl-[20px] pr-[8px] pt-[8px]"
-              role={useHydrationCompleted() ? 'button' : 'none'}
               type="button"
               onClick={isSignedIn ? authActions.openSignOutDialog : authActions.openSignInDialog}
             >
