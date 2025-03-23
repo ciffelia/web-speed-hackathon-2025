@@ -54,6 +54,7 @@ export function registerSsr(app: FastifyInstance): void {
         <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: storeHydrateScript }} />
       </StrictMode>,
       {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         bootstrapScripts: [globalThis.AREMATV_SCRIPT_URL!],
         onShellReady() {
           const stream = new PassThrough();
