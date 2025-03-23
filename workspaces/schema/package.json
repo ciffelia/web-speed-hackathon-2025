@@ -8,7 +8,7 @@
     "lint": "wireit",
     "lint:eslint": "wireit",
     "lint:prettier": "wireit",
-    "typecheck": "tsc --build"
+    "typecheck": "wireit"
   },
   "dependencies": {
     "@sinclair/typebox": "0.34.30",
@@ -43,6 +43,9 @@
     },
     "format:prettier": {
       "command": "prettier --write ."
+    },
+    "typecheck": {
+      "command": "tsc --noEmit"
     }
   }
 }

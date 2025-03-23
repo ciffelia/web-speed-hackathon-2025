@@ -7,9 +7,13 @@
     "jsx": "react-jsx",
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "outDir": "./dist",
     "skipLibCheck": true,
-    "target": "ESNext"
+    "sourceMap": true,
+    "target": "ESNext",
+    "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo"
   },
-  "extends": "../../tsconfig.base.json",
-  "include": ["src/**/*", "*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"]
+  "exclude": ["./dist", "./streams", "../client/dist"],
+  "extends": "@wsh-2025/configs/tsconfig.json",
+  "include": ["./src/**/*", "./playwright.config.ts", "./reporter.ts"]
 }

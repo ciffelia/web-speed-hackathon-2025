@@ -8,20 +8,17 @@
     "lib": ["ESNext"],
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "outDir": "./dist",
     "paths": {
+      "@wsh-2025/client/*": ["../client/*"],
       "@wsh-2025/server/*": ["./*"]
     },
     "skipLibCheck": true,
-    "target": "ESNext"
+    "sourceMap": true,
+    "target": "ESNext",
+    "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo"
   },
-  "extends": "../../tsconfig.base.json",
-  "include": ["src/**/*", "tools/**/*", "*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"],
-  "references": [
-    {
-      "path": "../schema"
-    },
-    {
-      "path": "../client"
-    }
-  ]
+  "exclude": ["./dist", "./streams", "../client/dist"],
+  "extends": "@wsh-2025/configs/tsconfig.json",
+  "include": ["tools/**/*", "./src/**/*", "**/*.mjs", "drizzle.config.ts", "../client/**/*"]
 }

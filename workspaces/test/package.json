@@ -9,7 +9,7 @@
     "lint:eslint": "wireit",
     "lint:prettier": "wireit",
     "test": "wireit",
-    "typecheck": "tsc --build"
+    "typecheck": "wireit"
   },
   "devDependencies": {
     "@playwright/test": "1.50.1",
@@ -25,6 +25,9 @@
         "../schema/src/**/*",
         "./src/**/*"
       ]
+    },
+    "typecheck": {
+      "command": "tsc --noEmit"
     },
     "lint": {
       "command": "pnpm run lint:eslint && pnpm run lint:prettier"

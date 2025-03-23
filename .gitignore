@@ -219,6 +219,3 @@ $RECYCLE.BIN/
 
 # Wireit
 .wireit
-
-# tsc
-dist-tsc
