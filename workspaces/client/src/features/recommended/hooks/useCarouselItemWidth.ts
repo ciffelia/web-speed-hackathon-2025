@@ -36,9 +36,13 @@ export function useClientWidth<T extends Element>() {
     };
   }, []);
 
-  const width = useSyncExternalStore(subscribe, () => {
-    return ref.current?.clientWidth;
-  });
+  const width = useSyncExternalStore(
+    subscribe,
+    () => {
+      return ref.current?.clientWidth;
+    },
+    () => undefined,
+  );
 
   return { ref, width };
 }
