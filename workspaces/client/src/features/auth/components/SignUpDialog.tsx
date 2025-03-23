@@ -2,7 +2,6 @@ import { BetterFetchError } from '@better-fetch/fetch';
 import { FORM_ERROR } from 'final-form';
 import { useId } from 'react';
 import { Field, Form } from 'react-final-form';
-import { z } from 'zod';
 
 import { useAuthActions } from '@wsh-2025/client/src/features/auth/hooks/useAuthActions';
 import { isValidEmail } from '@wsh-2025/client/src/features/auth/logics/isValidEmail';
@@ -61,16 +60,26 @@ export const SignUpDialog = ({ isOpen, onClose, onOpenSignIn }: Props) => {
 
         <Form
           validate={(values) => {
-            const schema = z.object({
-              email: z
-                .string({ required_error: 'メールアドレスを入力してください' })
-                .and(z.custom(isValidEmail, { message: 'メールアドレスが正しくありません' })),
-              password: z
-                .string({ required_error: 'パスワードを入力してください' })
-                .and(z.custom(isValidPassword, { message: 'パスワードが正しくありません' })),
-            });
-            const result = schema.safeParse(values);
-            return result.success ? undefined : result.error.formErrors.fieldErrors;
+            const emailErrors: string[] = [];
+            const passwordErrors: string[] = [];
+            if (typeof values.email !== 'string') {
+              emailErrors.push('メールアドレスを入力してください');
+            }
+            if (!isValidEmail(values.email)) {
+              emailErrors.push('メールアドレスが正しくありません');
+            }
+            if (typeof values.password !== 'string') {
+              passwordErrors.push('パスワードを入力してください');
+            }
+            if (!isValidPassword(values.password)) {
+              passwordErrors.push('パスワードが正しくありません');
+            }
+            return emailErrors.length === 0 && passwordErrors.length === 0
+              ? undefined
+              : {
+                  email: emailErrors.length === 0 ? undefined : emailErrors,
+                  password: passwordErrors.length === 0 ? undefined : passwordErrors,
+                };
           }}
           onSubmit={onSubmit}
         >
