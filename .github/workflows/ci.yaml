@@ -108,7 +108,7 @@ jobs:
 
       - run: sudo apt-get update && sudo apt-get -y install fonts-ipafont fonts-ipaexfont
 
-      - run: pnpm --filter "@wsh-2025/test" exec playwright install chromium
+      - run: pnpm --filter "@wsh-2025/test" exec playwright install chrome
 
       - run: pnpm run build
 
