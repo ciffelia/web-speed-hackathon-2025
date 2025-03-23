@@ -24,10 +24,7 @@
 - **フォーム管理**: Final Form
 - **日付処理**: Luxon
 - **ビルドツール**: Webpack 5
-- **動画プレイヤー**:
-  - Shaka Player
-  - HLS.js
-  - Video.js
+- **動画プレイヤー**: Video.js
 
 ### サーバー側
 
