@@ -4,13 +4,9 @@ import type { createStore } from '@wsh-2025/client/src/app/createStore';
 import { RecommendedSection } from '@wsh-2025/client/src/features/recommended/components/RecommendedSection';
 
 export const prefetch = async (store: ReturnType<typeof createStore>) => {
-  const state = store.getState();
-  const modules =
-    state.features.recommended.references[
-      'error'
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    ]?.map((moduleId) => state.features.recommended.recommendedModules[moduleId]!) ??
-    (await state.features.recommended.fetchRecommendedModulesByReferenceId({ referenceId: 'error' }));
+  const modules = await store
+    .getState()
+    .features.recommended.fetchRecommendedModulesByReferenceId({ referenceId: 'error' });
   return { modules };
 };
 

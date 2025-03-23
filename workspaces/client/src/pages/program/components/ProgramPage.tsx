@@ -22,17 +22,12 @@ export const prefetch = async (store: ReturnType<typeof createStore>, { programI
   const since = now.startOf('day').toISO();
   const until = now.endOf('day').toISO();
 
-  const state = store.getState();
-  const program =
-    state.features.program.programs[programId] ?? (await state.features.program.fetchProgramById({ programId }));
-  const channels = await state.features.channel.fetchChannels();
-  const timetable = await state.features.timetable.fetchTimetable({ since, until });
-  const modules =
-    state.features.recommended.references[
-      programId
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    ]?.map((moduleId) => state.features.recommended.recommendedModules[moduleId]!) ??
-    (await state.features.recommended.fetchRecommendedModulesByReferenceId({ referenceId: programId }));
+  const program = await store.getState().features.program.fetchProgramById({ programId });
+  const channels = await store.getState().features.channel.fetchChannels();
+  const timetable = await store.getState().features.timetable.fetchTimetable({ since, until });
+  const modules = await store
+    .getState()
+    .features.recommended.fetchRecommendedModulesByReferenceId({ referenceId: programId });
   return { channels, modules, program, timetable };
 };
 
