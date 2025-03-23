@@ -2,13 +2,14 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always"
   },
-  "eslint.codeActionsOnSave.rules": ["import/order", "sort/*"],
+  "eslint.codeActionsOnSave.rules": ["import/order", "perfectionist/*", "sort/*"],
   "eslint.options": {
     // Workaround for https://github.com/microsoft/vscode-eslint/issues/1938
     "fixTypes": ["problem", "suggestion", "layout"]
   },
   "eslint.rules.customizations": [
     { "rule": "import/order", "severity": "off" },
+    { "rule": "perfectionist/*", "severity": "off" },
     { "rule": "sort/*", "severity": "off" }
   ],
   "files.exclude": {
