@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import type { ArrayValues } from 'type-fest';
 
 import { useStore } from '@wsh-2025/client/src/app/StoreContext';
+import { parseIso } from '@wsh-2025/client/src/parseCache';
 
 type ChannelId = string;
 
@@ -21,7 +22,7 @@ export function useTimetable() {
     }
 
     record[channel.id] = filteredPrograms.sort((a, b) => {
-      return DateTime.fromISO(a.startAt).toMillis() - DateTime.fromISO(b.startAt).toMillis();
+      return parseIso(a.startAt) - parseIso(b.startAt);
     });
   }
 
