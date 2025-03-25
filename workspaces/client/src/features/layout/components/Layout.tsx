@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import type { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { Flipper } from 'react-flip-toolkit';
 import { Link, useLocation, useNavigation } from 'react-router';
 
@@ -76,6 +76,12 @@ export const Layout = ({ children }: Props) => {
           <nav>
             <button
               className="block flex h-[56px] w-[188px] items-center justify-center bg-transparent pb-[8px] pl-[20px] pr-[8px] pt-[8px]"
+              // make sure that this button is clicked after hydration in automated tests
+              role={useSyncExternalStore(
+                () => () => {},
+                () => 'button',
+                () => 'none',
+              )}
               type="button"
               onClick={isSignedIn ? authActions.openSignOutDialog : authActions.openSignInDialog}
             >
