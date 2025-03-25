@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Flipped } from 'react-flip-toolkit';
 import type { Params } from 'react-router';
 import { Link, useNavigate, useParams } from 'react-router';
@@ -41,9 +41,15 @@ export const ProgramPage = () => {
   const program = useProgramById({ programId });
   invariant(program);
 
+  const startAt = useMemo(() => DateTime.fromISO(program.startAt), [program.startAt]);
+  const endAt = useMemo(() => DateTime.fromISO(program.endAt), [program.endAt]);
+
+  const startAtText = useMemo(() => startAt.toFormat('L月d日 H:mm'), [startAt]);
+  const endAtText = useMemo(() => endAt.toFormat('L月d日 H:mm'), [endAt]);
+
   const timetable = useTimetable();
   const nextProgram = timetable[program.channel.id]?.find((p) => {
-    return DateTime.fromISO(program.endAt).equals(DateTime.fromISO(p.startAt));
+    return endAt.equals(DateTime.fromISO(p.startAt));
   });
 
   const modules = useRecommended({ referenceId: programId });
@@ -52,8 +58,8 @@ export const ProgramPage = () => {
 
   const forceUpdate = useUpdate();
   const navigate = useNavigate();
-  const isArchivedRef = useRef(DateTime.fromISO(program.endAt) <= DateTime.now());
-  const isBroadcastStarted = DateTime.fromISO(program.startAt) <= DateTime.now();
+  const isArchivedRef = useRef(endAt <= DateTime.now());
+  const isBroadcastStarted = startAt <= DateTime.now();
   useEffect(() => {
     if (isArchivedRef.current) {
       return;
@@ -72,7 +78,7 @@ export const ProgramPage = () => {
 
     // 放送中に次の番組が始まったら、画面をそのままにしつつ、情報を次の番組にする
     let timeout = setTimeout(function tick() {
-      if (DateTime.now() < DateTime.fromISO(program.endAt)) {
+      if (DateTime.now() < endAt) {
         timeout = setTimeout(tick, 250);
         return;
       }
@@ -144,7 +150,7 @@ export const ProgramPage = () => {
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#00000077] p-[24px]">
                   <p className="mb-[32px] text-[24px] font-bold text-[#ffffff]">
-                    この番組は {DateTime.fromISO(program.startAt).toFormat('L月d日 H:mm')} に放送予定です
+                    この番組は {startAtText} に放送予定です
                   </p>
                 </div>
               </div>
@@ -160,9 +166,9 @@ export const ProgramPage = () => {
             <Ellipsis lines={2}>{program.title}</Ellipsis>
           </h1>
           <div className="mt-[8px] text-[16px] text-[#999999]">
-            {DateTime.fromISO(program.startAt).toFormat('L月d日 H:mm')}
+            {startAtText}
             {' 〜 '}
-            {DateTime.fromISO(program.endAt).toFormat('L月d日 H:mm')}
+            {endAtText}
           </div>
           <div className="mt-[16px] text-[16px] text-[#999999]">
             <Ellipsis lines={3}>{program.description}</Ellipsis>

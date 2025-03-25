@@ -26,11 +26,8 @@ export const Program = ({ height, program }: Props): ReactElement => {
     setProgram(program);
   };
 
-  const [startAt, endAt] = useMemo(() => {
-    const startAt = DateTime.fromISO(program.startAt);
-    const endAt = DateTime.fromISO(program.endAt);
-    return [startAt, endAt];
-  }, [program.startAt, program.endAt]);
+  const startAt = useMemo(() => DateTime.fromISO(program.startAt), [program.startAt]);
+  const endAt = useMemo(() => DateTime.fromISO(program.endAt), [program.endAt]);
 
   const currentUnixtimeMs = useCurrentUnixtimeMs();
   const isBroadcasting = startAt.toMillis() <= currentUnixtimeMs && currentUnixtimeMs < endAt.toMillis();
