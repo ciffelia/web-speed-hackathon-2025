@@ -80,7 +80,9 @@ export const Program = ({ height, program }: Props): ReactElement => {
           </div>
         </div>
       </button>
-      <ProgramDetailDialog isOpen={shouldProgramDetailDialogOpen} program={program} />
+      {shouldProgramDetailDialogOpen && (
+        <ProgramDetailDialog isOpen={shouldProgramDetailDialogOpen} program={program} />
+      )}
     </>
   );
 };
