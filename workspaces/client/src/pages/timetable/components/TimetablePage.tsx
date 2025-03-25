@@ -14,6 +14,7 @@ export const prefetch = async (store: ReturnType<typeof createStore>) => {
   const since = now.startOf('day').toISO();
   const until = now.endOf('day').toISO();
 
+  store.getState().pages.timetable.initializeInitialCurrentUnixtimeMs();
   const [channels, programs] = await Promise.all([
     store.getState().features.channel.fetchChannels(),
     store.getState().features.timetable.fetchTimetable({ since, until }),

@@ -6,10 +6,11 @@ import type { ReactElement } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ArrayValues } from 'type-fest';
 
+import { useIsAfter } from '../hooks/useIsAfter';
+
 import { Ellipsis } from '@wsh-2025/client/src/features/layout/components/Ellipsis';
 import { ProgramDetailDialog } from '@wsh-2025/client/src/pages/timetable/components/ProgramDetailDialog';
 import { useColumnWidth } from '@wsh-2025/client/src/pages/timetable/hooks/useColumnWidth';
-import { useCurrentUnixtimeMs } from '@wsh-2025/client/src/pages/timetable/hooks/useCurrentUnixtimeMs';
 import { useSelectedProgramId } from '@wsh-2025/client/src/pages/timetable/hooks/useSelectedProgramId';
 
 interface Props {
@@ -29,9 +30,9 @@ export const Program = ({ height, program }: Props): ReactElement => {
   const startAt = useMemo(() => DateTime.fromISO(program.startAt), [program.startAt]);
   const endAt = useMemo(() => DateTime.fromISO(program.endAt), [program.endAt]);
 
-  const currentUnixtimeMs = useCurrentUnixtimeMs();
-  const isBroadcasting = startAt.toMillis() <= currentUnixtimeMs && currentUnixtimeMs < endAt.toMillis();
-  const isArchived = endAt.toMillis() <= currentUnixtimeMs;
+  const isStarted = useIsAfter(startAt);
+  const isArchived = useIsAfter(endAt);
+  const isBroadcasting = isStarted && !isArchived;
 
   const titleRef = useRef<HTMLDivElement | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);

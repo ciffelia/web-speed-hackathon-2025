@@ -2,7 +2,6 @@ import { lens } from '@dhmk/zustand-lens';
 import type { StandardSchemaV1 } from '@standard-schema/spec';
 import type * as schema from '@wsh-2025/schema/src/api/schema';
 import { produce } from 'immer';
-import * as _ from 'lodash-es';
 import type { ArrayValues } from 'type-fest';
 
 import { DEFAULT_WIDTH } from '@wsh-2025/client/src/features/timetable/constants/grid_size';
@@ -12,7 +11,7 @@ type Program = ArrayValues<StandardSchemaV1.InferOutput<typeof schema.getTimetab
 
 interface TimetablePageState {
   columnWidthRecord: Record<ChannelId, number>;
-  currentUnixtimeMs: number;
+  initialUnixtimeMs: number;
   selectedProgramId: string | null;
   shownNewFeatureDialog: boolean;
 }
@@ -20,12 +19,12 @@ interface TimetablePageState {
 interface TimetablePageActions {
   changeColumnWidth: (params: { channelId: string; delta: number }) => void;
   closeNewFeatureDialog: () => void;
-  refreshCurrentUnixtimeMs: () => void;
+  initializeInitialCurrentUnixtimeMs: () => void;
   selectProgram: (program: Program | null) => void;
 }
 
 export const createTimetablePageStoreSlice = () => {
-  return lens<TimetablePageState & TimetablePageActions>((set, _get) => ({
+  return lens<TimetablePageState & TimetablePageActions>((set, get) => ({
     changeColumnWidth: (params: { channelId: string; delta: number }) => {
       set((state) => {
         return produce(state, (draft) => {
@@ -40,12 +39,15 @@ export const createTimetablePageStoreSlice = () => {
       }));
     },
     columnWidthRecord: {},
-    currentUnixtimeMs: 0,
-    refreshCurrentUnixtimeMs: _.debounce(() => {
+    initializeInitialCurrentUnixtimeMs: () => {
+      if (get().initialUnixtimeMs !== 0) {
+        return;
+      }
       set(() => ({
-        currentUnixtimeMs: Date.now(),
+        initialUnixtimeMs: Date.now(),
       }));
-    }, 50),
+    },
+    initialUnixtimeMs: 0,
     selectedProgramId: null,
     selectProgram: (program: Program | null) => {
       set(() => ({
