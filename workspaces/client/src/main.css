@@ -1,0 +1,21 @@
+.__arema_program_page_reveal_container {
+  animation: __arema_program_page_reveal linear both;
+  animation-timeline: view();
+  animation-range: contain 0% contain 0%;
+
+  & > * {
+    display: var(--display, none);
+  }
+}
+
+@keyframes __arema_program_page_reveal {
+  from {
+    --display: none;
+  }
+  99.999% {
+    --display: none;
+  }
+  to {
+    --display: block;
+  }
+}

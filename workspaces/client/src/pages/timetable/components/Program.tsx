@@ -3,7 +3,7 @@ import type * as schema from '@wsh-2025/schema/src/api/schema';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 import type { ReactElement } from 'react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo } from 'react';
 import type { ArrayValues } from 'type-fest';
 
 import { useIsAfter } from '../hooks/useIsAfter';
@@ -34,21 +34,6 @@ export const Program = ({ height, program }: Props): ReactElement => {
   const isArchived = useIsAfter(endAt);
   const isBroadcasting = isStarted && !isArchived;
 
-  const titleRef = useRef<HTMLDivElement | null>(null);
-  const imageRef = useRef<HTMLImageElement | null>(null);
-
-  const [shouldImageBeVisible, setShouldImageBeVisible] = useState<boolean>(false);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const imageHeight = imageRef.current?.clientHeight ?? 0;
-      const titleHeight = titleRef.current?.clientHeight ?? 0;
-      setShouldImageBeVisible(imageHeight <= height - titleHeight);
-    }, 250);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [height]);
-
   return (
     <>
       <button
@@ -66,7 +51,7 @@ export const Program = ({ height, program }: Props): ReactElement => {
         onClick={onClick}
       >
         <div className="flex size-full flex-col overflow-hidden">
-          <div ref={titleRef} className="mb-[8px] flex flex-row items-start justify-start">
+          <div className="mb-[8px] flex flex-row items-start justify-start">
             <span
               className={`mr-[8px] shrink-0 grow-0 text-[14px] font-bold`}
               style={{
@@ -84,16 +69,10 @@ export const Program = ({ height, program }: Props): ReactElement => {
               <Ellipsis lines={3}>{program.title}</Ellipsis>
             </div>
           </div>
-          <div
-            className={`w-full`}
-            style={{
-              opacity: shouldImageBeVisible ? 1 : 0,
-            }}
-          >
+          <div className={`__arema_program_page_reveal_container aspect-video w-full`}>
             <img
-              ref={imageRef}
               alt=""
-              className="pointer-events-none aspect-video w-full rounded-[8px] border-[2px] border-solid border-[#FFFFFF1F]"
+              className="pointer-events-none h-full w-full rounded-[8px] border-[2px] border-solid border-[#FFFFFF1F]"
               decoding="async"
               loading="lazy"
               src={program.thumbnailUrl}

@@ -10,6 +10,8 @@ import { StoreProvider } from '@wsh-2025/client/src/app/StoreContext';
 import { createRoutes } from '@wsh-2025/client/src/app/createRoutes';
 import { createStore } from '@wsh-2025/client/src/app/createStore';
 
+import './main.css';
+
 declare global {
   var __zustandHydrationData: unknown;
   var __staticRouterHydrationData: HydrationState;
