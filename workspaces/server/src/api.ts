@@ -640,11 +640,11 @@ export async function registerApi(app: FastifyInstance): Promise<void> {
     schema: {
       tags: ['認証'],
     } satisfies FastifyZodOpenApiSchema,
-    handler: async function signOut(req, reply) {
-      const userId = req.session.get('id');
-      if (!userId) {
-        return reply.code(401).send();
-      }
+    handler: function signOut(req, reply) {
+      // const userId = req.session.get('id');
+      // if (!userId) {
+      //   return reply.code(401).send();
+      // }
       req.session.set('id', void 0);
       reply.code(200).send();
     },
